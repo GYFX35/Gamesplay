@@ -30,3 +30,20 @@ export interface ChatMessage {
   message: string;
   timestamp: string;
 }
+
+export interface AIAgentMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  suggestions?: string[];
+}
+
+export interface GameProject {
+  id: string;
+  userId: string;
+  name: string;
+  description: string;
+  lastModified: string;
+  assets: string[];
+}
