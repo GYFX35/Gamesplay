@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
@@ -44,6 +44,14 @@ const Sidebar: React.FC = () => {
             >
               <Globe size={20} />
               <span className="text-sm font-semibold hidden md:block">DNS Setup</span>
+            </Link>
+            <Link
+              to="/platform-url"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/platform-url') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title="Platform URL"
+            >
+              <Link2 size={20} />
+              <span className="text-sm font-semibold hidden md:block">Platform URL</span>
             </Link>
           </div>
         </div>

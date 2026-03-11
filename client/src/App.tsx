@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import StreamView from './pages/StreamView';
 import Extension from './pages/Extension';
 import DNSSetup from './pages/DNSSetup';
+import PlatformURL from './pages/PlatformURL';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/browse" element={<Home />} />
         <Route path="/extension" element={<Extension />} />
         <Route path="/setup-dns" element={<DNSSetup />} />
+        <Route path="/platform-url" element={<PlatformURL />} />
       </Routes>
     </Router>
   );
