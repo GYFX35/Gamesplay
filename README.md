@@ -2,6 +2,8 @@
 
 Gamesplay is a dedicated channel for streaming and playing games. It provides a platform for gamers to share their experiences and enjoy a wide variety of gaming content.
 
+**Official Website:** [https://gamesplay.tv](https://gamesplay.tv)
+
 ## Features
 
 - **Live Streaming**: Stream your favorite games to a global audience.
