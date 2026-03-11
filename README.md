@@ -5,9 +5,19 @@ Gamesplay is a dedicated channel for streaming and playing games. It provides a 
 ## Features
 
 - **Live Streaming**: Stream your favorite games to a global audience.
-- **Game Library**: Access a diverse collection of games to play.
-- **Community Interaction**: Engage with other gamers through chat and forums.
-- **High Performance**: Optimized for a smooth gaming and streaming experience.
+- **MMA AR Game**: Immersive mixed martial arts experience using Augmented Reality.
+- **AI-Powered Gameplay**: Intelligent agents and computer vision for enhanced interaction.
+- **Blockchain Economy**: Secure in-game assets, NFTs, and decentralized rewards.
+- **High Performance**: Optimized for a smooth 3D gaming and streaming experience.
+
+## Roadmap & Integration
+
+We are currently expanding Gamesplay to include cutting-edge technologies. For a detailed roadmap and technical strategy, please see our [Integration Plan](INTEGRATION_PLAN.md).
+
+### Key Upcoming Features
+- **MMA AR Integration**: Bringing the octagon to your living room.
+- **AI Agents**: Competitive AI that adapts to your fighting style.
+- **Web3 Components**: Play-to-earn mechanics and collectible MMA NFTs.
 
 ## Getting Started
 
