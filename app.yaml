@@ -1,0 +1,14 @@
+runtime: nodejs20
+service: default
+
+handlers:
+  - url: /api/.*
+    script: auto
+
+  - url: /(.*\.(js|css|png|jpg|svg|ico|webp|woff|woff2))$
+    static_files: client/dist/\1
+    upload: client/dist/.*\.(js|css|png|jpg|svg|ico|webp|woff|woff2)$
+
+  - url: /.*
+    static_files: client/dist/index.html
+    upload: client/dist/index.html

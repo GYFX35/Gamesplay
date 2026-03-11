@@ -10,6 +10,10 @@
   "scripts": {
     "build:all": "npm run build --workspace=client && npm run build --workspace=server",
     "dev:client": "npm run dev --workspace=client",
-    "dev:server": "npm run dev --workspace=server"
+    "dev:server": "npm run dev --workspace=server",
+    "deploy:cloudflare": "wrangler pages deploy client/dist",
+    "deploy:firebase": "firebase deploy --only hosting",
+    "docker:build": "docker build -t gamesplay-app .",
+    "docker:run": "docker-compose up"
   }
 }

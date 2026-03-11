@@ -1,0 +1,9 @@
+name = "gamesplay-client"
+compatibility_date = "2024-03-01"
+
+[site]
+bucket = "./dist"
+
+[build]
+command = "npm run build"
+upload_dir = "dist"
