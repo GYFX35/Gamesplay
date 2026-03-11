@@ -27,6 +27,10 @@ const streams = [
   { id: '2', userId: 'u2', gameId: '2', title: 'Ranked racing to Top 10', viewerCount: 850, startedAt: new Date().toISOString() },
 ];
 
+const projects = [
+  { id: 'p1', userId: 'u1', name: 'My First MMA Game', description: 'A basic MMA fighting game.', lastModified: new Date().toISOString(), assets: ['fighter.glb', 'arena.glb'] },
+];
+
 // API Endpoints
 app.get('/api/games', (req, res) => {
   res.json(games);
@@ -43,6 +47,29 @@ app.get('/api/streams/:id', (req, res) => {
   } else {
     res.status(404).json({ message: 'Stream not found' });
   }
+});
+
+app.get('/api/projects', (req, res) => {
+  res.json(projects);
+});
+
+app.post('/api/projects', (req, res) => {
+  const newProject = {
+    id: `p${projects.length + 1}`,
+    lastModified: new Date().toISOString(),
+    ...req.body
+  };
+  projects.push(newProject);
+  res.status(201).json(newProject);
+});
+
+app.post('/api/ai/assist', (req, res) => {
+  const { prompt } = req.body;
+  // Simulated AI Logic
+  res.json({
+    suggestion: `I've analyzed your request: "${prompt}". Based on MMA game mechanics, I suggest adding a stamina system to balance the combat.`,
+    actions: ['Add Stamina Bar', 'Optimize Animations', 'Generate Sound Effects']
+  });
 });
 
 // Socket.io for Real-time features

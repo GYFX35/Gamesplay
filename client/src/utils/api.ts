@@ -16,3 +16,13 @@ export const getStreamById = async (id: string) => {
   const response = await axios.get(`${API_URL}/streams/${id}`);
   return response.data;
 };
+
+export const getAIAssistance = async (prompt: string) => {
+  const response = await axios.post(`${API_URL}/ai/assist`, { prompt });
+  return response.data;
+};
+
+export const saveProject = async (projectData: any) => {
+  const response = await axios.post(`${API_URL}/projects`, projectData);
+  return response.data;
+};
