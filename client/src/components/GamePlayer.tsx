@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars, MeshDistortMaterial, Float, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
+import { OrbitControls, Stars, MeshDistortMaterial, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
 const InteractiveObject = ({ position, color, shape }: { position: [number, number, number], color: string, shape: 'sphere' | 'box' | 'torus' }) => {
