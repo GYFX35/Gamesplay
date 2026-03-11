@@ -2,6 +2,12 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import { TencentService } from './services/tencentService';
+import { NintendoService } from './services/nintendoService';
+import { MicrosoftService } from './services/microsoftService';
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -28,7 +34,26 @@ const streams = [
 ];
 
 // API Endpoints
-app.get('/api/games', (req, res) => {
+app.get('/api/games', async (req, res) => {
+  const tencentGames = await TencentService.getGames();
+  const nintendoGames = await NintendoService.getGames();
+  const microsoftGames = await MicrosoftService.getGames();
+
+  res.json([...games, ...tencentGames, ...nintendoGames, ...microsoftGames]);
+});
+
+app.get('/api/external/tencent', async (req, res) => {
+  const games = await TencentService.getGames();
+  res.json(games);
+});
+
+app.get('/api/external/nintendo', async (req, res) => {
+  const games = await NintendoService.getGames();
+  res.json(games);
+});
+
+app.get('/api/external/microsoft', async (req, res) => {
+  const games = await MicrosoftService.getGames();
   res.json(games);
 });
 
@@ -70,7 +95,9 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3001;
-httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT = Number(process.env.PORT) || 3001;
+const HOST = process.env.HOST || '0.0.0.0';
+
+httpServer.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });
