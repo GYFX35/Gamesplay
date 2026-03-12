@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
@@ -36,6 +36,14 @@ const Sidebar: React.FC = () => {
             >
               <Cpu size={20} />
               <span className="text-sm font-semibold hidden md:block">Create</span>
+            </Link>
+            <Link
+              to="/entertainment"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/entertainment') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title="Entertainment"
+            >
+              <Music size={20} />
+              <span className="text-sm font-semibold hidden md:block">Entertainment</span>
             </Link>
             <Link
               to="/extension"

@@ -26,3 +26,8 @@ export const saveProject = async (projectData: any) => {
   const response = await axios.post(`${API_URL}/projects`, projectData);
   return response.data;
 };
+
+export const getMusicTracks = async () => {
+  const response = await axios.get(`${API_URL}/music`);
+  return response.data;
+};
