@@ -47,3 +47,13 @@ export interface GameProject {
   lastModified: string;
   assets: string[];
 }
+
+export interface MusicTrack {
+  id: string;
+  title: string;
+  artist: string;
+  album: string;
+  duration: string;
+  thumbnail: string;
+  audioUrl: string;
+}

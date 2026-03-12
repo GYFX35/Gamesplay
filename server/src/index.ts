@@ -37,6 +37,12 @@ const projects = [
   { id: 'p1', userId: 'u1', name: 'My First MMA Game', description: 'A basic MMA fighting game.', lastModified: new Date().toISOString(), assets: ['fighter.glb', 'arena.glb'] },
 ];
 
+const musicTracks = [
+  { id: 'm1', title: 'Cybernetic Pulse', artist: 'Neon Voyager', album: 'Synth Horizons', duration: '3:45', thumbnail: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id: 'm2', title: 'Digital Dreams', artist: 'Ether Echo', album: 'Virtual Reality', duration: '4:12', thumbnail: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+  { id: 'm3', title: 'Pixel Journey', artist: 'Bit Crusher', album: '8-Bit Adventures', duration: '2:58', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+];
+
 // API Endpoints
 app.get('/api/games', async (req, res) => {
   const tencentGames = await TencentService.getGames();
@@ -76,6 +82,10 @@ app.get('/api/streams/:id', (req, res) => {
 
 app.get('/api/projects', (req, res) => {
   res.json(projects);
+});
+
+app.get('/api/music', (req, res) => {
+  res.json(musicTracks);
 });
 
 app.post('/api/projects', (req, res) => {
