@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import { TencentService } from './services/tencentService';
 import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
+import { EpicGamesService } from './services/epicGamesService';
+import { TwitchService } from './services/twitchService';
 
 dotenv.config();
 
@@ -45,11 +47,24 @@ const musicTracks = [
 
 // API Endpoints
 app.get('/api/games', async (req, res) => {
-  const tencentGames = await TencentService.getGames();
-  const nintendoGames = await NintendoService.getGames();
-  const microsoftGames = await MicrosoftService.getGames();
+  try {
+    const results = await Promise.allSettled([
+      TencentService.getGames(),
+      NintendoService.getGames(),
+      MicrosoftService.getGames(),
+      EpicGamesService.getGames(),
+      TwitchService.getGames()
+    ]);
 
-  res.json([...games, ...tencentGames, ...nintendoGames, ...microsoftGames]);
+    const externalGames = results
+      .filter((result): result is PromiseFulfilledResult<any[]> => result.status === 'fulfilled')
+      .flatMap(result => result.value);
+
+    res.json([...games, ...externalGames]);
+  } catch (error) {
+    console.error('Error fetching games:', error);
+    res.json(games); // Fallback to local mock games
+  }
 });
 
 app.get('/api/external/tencent', async (req, res) => {
@@ -64,6 +79,16 @@ app.get('/api/external/nintendo', async (req, res) => {
 
 app.get('/api/external/microsoft', async (req, res) => {
   const games = await MicrosoftService.getGames();
+  res.json(games);
+});
+
+app.get('/api/external/epic', async (req, res) => {
+  const games = await EpicGamesService.getGames();
+  res.json(games);
+});
+
+app.get('/api/external/twitch', async (req, res) => {
+  const games = await TwitchService.getGames();
   res.json(games);
 });
 

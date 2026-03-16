@@ -1,8 +1,10 @@
 import React from 'react';
 import { Chrome, Globe, Home, Compass, Link2, Cpu, Music } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -16,64 +18,64 @@ const Sidebar: React.FC = () => {
             <Link
               to="/"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Home"
+              title={t('home')}
             >
               <Home size={20} />
-              <span className="text-sm font-semibold hidden md:block">Home</span>
+              <span className="text-sm font-semibold hidden md:block">{t('home')}</span>
             </Link>
             <Link
               to="/browse"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/browse') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Browse"
+              title={t('browse')}
             >
               <Compass size={20} />
-              <span className="text-sm font-semibold hidden md:block">Browse</span>
+              <span className="text-sm font-semibold hidden md:block">{t('browse')}</span>
             </Link>
             <Link
               to="/create"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/create') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Create Game"
+              title={t('create')}
             >
               <Cpu size={20} />
-              <span className="text-sm font-semibold hidden md:block">Create</span>
+              <span className="text-sm font-semibold hidden md:block">{t('create')}</span>
             </Link>
             <Link
               to="/entertainment"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/entertainment') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Entertainment"
+              title={t('entertainment')}
             >
               <Music size={20} />
-              <span className="text-sm font-semibold hidden md:block">Entertainment</span>
+              <span className="text-sm font-semibold hidden md:block">{t('entertainment')}</span>
             </Link>
             <Link
               to="/extension"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/extension') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Chrome Extension"
+              title={t('extension')}
             >
               <Chrome size={20} />
-              <span className="text-sm font-semibold hidden md:block">Extension</span>
+              <span className="text-sm font-semibold hidden md:block">{t('extension')}</span>
             </Link>
             <Link
               to="/setup-dns"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/setup-dns') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="DNS Setup"
+              title={t('dns_setup')}
             >
               <Globe size={20} />
-              <span className="text-sm font-semibold hidden md:block">DNS Setup</span>
+              <span className="text-sm font-semibold hidden md:block">{t('dns_setup')}</span>
             </Link>
             <Link
               to="/platform-url"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/platform-url') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
-              title="Platform URL"
+              title={t('platform_url')}
             >
               <Link2 size={20} />
-              <span className="text-sm font-semibold hidden md:block">Platform URL</span>
+              <span className="text-sm font-semibold hidden md:block">{t('platform_url')}</span>
             </Link>
           </div>
         </div>
 
         <div>
-          <h2 className="text-xs font-bold uppercase text-gray-400 mb-2 px-2 hidden md:block">Recommended Channels</h2>
+          <h2 className="text-xs font-bold uppercase text-gray-400 mb-2 px-2 hidden md:block">{t('recommended')}</h2>
           <div className="space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex items-center justify-between hover:bg-[#26262c] p-1 rounded cursor-pointer transition-colors group">

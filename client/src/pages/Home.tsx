@@ -3,8 +3,10 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { getStreams } from '../utils/api';
 import { Link } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   const [streams, setStreams] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,14 +33,18 @@ const Home: React.FC = () => {
           <section className="mb-8">
             <div className="relative aspect-video bg-[#18181b] rounded-lg overflow-hidden flex items-center justify-center border border-[#2d2d30] shadow-xl">
                 <div className="text-center z-10 px-4">
-                    <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Welcome to <span className="text-[#a970ff]">Gamesplay</span></h1>
-                    <p className="text-gray-400 text-lg md:text-xl mb-8 max-w-2xl mx-auto">The future of interactive 3D game streaming. Play, watch, and interact like never before.</p>
+                    <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">
+                        <Trans i18nKey="welcome">
+                            Welcome to <span className="text-[#a970ff]">Gamesplay</span>
+                        </Trans>
+                    </h1>
+                    <p className="text-gray-400 text-lg md:text-xl mb-8 max-w-2xl mx-auto">{t('tagline')}</p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button className="bg-[#a970ff] hover:bg-[#9147ff] text-white px-8 py-3 rounded font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(169,112,255,0.4)] w-full sm:w-auto">
-                            Browse Live Streams
+                            {t('browse_live')}
                         </button>
                         <button className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded font-bold transition-all backdrop-blur-sm w-full sm:w-auto">
-                            Start Streaming
+                            {t('start_streaming')}
                         </button>
                     </div>
                 </div>
