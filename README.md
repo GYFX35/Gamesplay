@@ -4,6 +4,12 @@ Gamesplay is a dedicated channel for streaming and playing games. It provides a 
 
 **Official Website:** [https://gamesplay.tv](https://gamesplay.tv)
 
+## Platform Preview
+
+| Home Page | Shop Page |
+| :---: | :---: |
+| ![Home Page](docs/screenshots/home.png) | ![Shop Page](docs/screenshots/shop.png) |
+
 ## Features
 
 - **Live Streaming**: Stream your favorite games to a global audience.

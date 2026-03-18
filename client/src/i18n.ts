@@ -17,7 +17,16 @@ const resources = {
       "entertainment": "Entertainment",
       "extension": "Extension",
       "dns_setup": "DNS Setup",
-      "platform_url": "Platform URL"
+      "platform_url": "Platform URL",
+      "shop": "Shop",
+      "shop_hero_title": "LEVEL UP YOUR",
+      "shop_hero_highlight": "GEAR",
+      "shop_hero_desc": "Discover exclusive MMA fighter skins, legendary equipment, and breathtaking visual effects for your AR experience.",
+      "shop_browse_drops": "Browse New Drops",
+      "shop_view_inventory": "View My Inventory",
+      "shop_sort_by": "Sort By",
+      "shop_load_more": "Load More Items",
+      "shop_search_placeholder": "Search items..."
     }
   },
   es: {
@@ -34,7 +43,16 @@ const resources = {
       "entertainment": "Entretenimiento",
       "extension": "Extensión",
       "dns_setup": "Configuración DNS",
-      "platform_url": "URL de la plataforma"
+      "platform_url": "URL de la plataforma",
+      "shop": "Tienda",
+      "shop_hero_title": "MEJORA TU",
+      "shop_hero_highlight": "EQUIPO",
+      "shop_hero_desc": "Descubre skins exclusivas de luchadores de MMA, equipo legendario y efectos visuales impresionantes para tu experiencia de RA.",
+      "shop_browse_drops": "Ver novedades",
+      "shop_view_inventory": "Ver mi inventario",
+      "shop_sort_by": "Ordenar por",
+      "shop_load_more": "Cargar más artículos",
+      "shop_search_placeholder": "Buscar artículos..."
     }
   },
   jp: {
@@ -51,7 +69,16 @@ const resources = {
       "entertainment": "エンターテインメント",
       "extension": "拡張機能",
       "dns_setup": "DNS設定",
-      "platform_url": "プラットフォームURL"
+      "platform_url": "プラットフォームURL",
+      "shop": "ショップ",
+      "shop_hero_title": "ギアを",
+      "shop_hero_highlight": "レベルアップ",
+      "shop_hero_desc": "独自のMMAファイタースキン、伝説の装備、そしてAR体験のための息をのむような視覚効果を発見してください。",
+      "shop_browse_drops": "新作をブラウズ",
+      "shop_view_inventory": "インベントリを表示",
+      "shop_sort_by": "並び替え",
+      "shop_load_more": "さらに読み込む",
+      "shop_search_placeholder": "アイテムを検索..."
     }
   }
 };

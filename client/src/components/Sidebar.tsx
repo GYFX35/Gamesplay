@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu, Music } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingBag } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -46,6 +46,14 @@ const Sidebar: React.FC = () => {
             >
               <Music size={20} />
               <span className="text-sm font-semibold hidden md:block">{t('entertainment')}</span>
+            </Link>
+            <Link
+              to="/shop"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/shop') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title={t('shop')}
+            >
+              <ShoppingBag size={20} />
+              <span className="text-sm font-semibold hidden md:block">{t('shop')}</span>
             </Link>
             <Link
               to="/extension"
