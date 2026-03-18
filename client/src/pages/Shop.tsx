@@ -10,7 +10,6 @@ const Shop: React.FC = () => {
   const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState<{ [key: string]: number }>({});
   const [orderStatus, setOrderStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
   useEffect(() => {
@@ -27,28 +26,16 @@ const Shop: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const addToCart = (productId: string) => {
-    setCart(prev => ({
-      ...prev,
-      [productId]: (prev[productId] || 0) + 1
-    }));
-  };
-
   const handleCheckout = async (productId: string) => {
     try {
       await createOrder({
         userId: 'u1', // Mock user ID
         productId,
-        quantity: cart[productId] || 1
+        quantity: 1
       });
-      setOrderStatus({ type: 'success', message: 'Order placed successfully!' });
-      setCart(prev => {
-        const newCart = { ...prev };
-        delete newCart[productId];
-        return newCart;
-      });
+      setOrderStatus({ type: 'success', message: t('order_success') });
     } catch (error) {
-      setOrderStatus({ type: 'error', message: 'Failed to place order.' });
+      setOrderStatus({ type: 'error', message: t('order_failed') });
     }
     setTimeout(() => setOrderStatus(null), 3000);
   };
@@ -64,7 +51,7 @@ const Shop: React.FC = () => {
               <ShoppingCart className="text-[#a970ff]" />
               {t('shop')}
             </h1>
-            <p className="text-gray-400">Exclusive Gamesplay gear and gaming hardware.</p>
+            <p className="text-gray-400">{t('shop_tagline')}</p>
           </header>
 
           {orderStatus && (
@@ -106,11 +93,11 @@ const Shop: React.FC = () => {
                         onClick={() => handleCheckout(product.id)}
                         className="bg-[#a970ff] hover:bg-[#9147ff] text-white px-4 py-2 rounded text-sm font-bold transition-colors"
                       >
-                        Buy Now
+                        {t('buy_now')}
                       </button>
                     </div>
                     <p className="text-[10px] text-gray-500 mt-3 uppercase tracking-wider font-bold">
-                      {product.stock} in stock • Free shipping worldwide
+                      {t('in_stock', { count: product.stock })} • {t('free_shipping')}
                     </p>
                   </div>
                 </div>
@@ -121,13 +108,12 @@ const Shop: React.FC = () => {
           <section className="mt-12 bg-[#1f1f23] p-8 rounded-xl border border-[#2d2d30]">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="max-w-xl">
-                <h2 className="text-2xl font-bold mb-4">Launch Your Own Store</h2>
+                <h2 className="text-2xl font-bold mb-4">{t('launch_store')}</h2>
                 <p className="text-gray-400 mb-6">
-                  Are you a content creator? Use our dropshipping integration to sell your own branded merchandise
-                  directly to your audience with zero upfront costs. We handle printing, shipping, and customer service.
+                  {t('creator_dropshipping')}
                 </p>
                 <button className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded font-bold transition-colors">
-                  Start Selling
+                  {t('start_selling')}
                 </button>
               </div>
               <div className="flex-shrink-0 grid grid-cols-2 gap-4">
