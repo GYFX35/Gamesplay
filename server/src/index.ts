@@ -8,6 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
+import { Product, Order } from '../../shared';
 
 dotenv.config();
 
@@ -45,13 +46,13 @@ const musicTracks = [
   { id: 'm3', title: 'Pixel Journey', artist: 'Bit Crusher', album: '8-Bit Adventures', duration: '2:58', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
 ];
 
-const products = [
+const products: Product[] = [
   { id: 'prod1', name: 'Gamesplay Pro Controller', description: 'High-performance controller for professional gaming.', price: 59.99, category: 'Hardware', thumbnail: 'https://images.unsplash.com/photo-1600080972464-8e5f35802d3e?w=300&h=300&fit=crop', stock: 50 },
   { id: 'prod2', name: 'Ultra-HD Gaming Headset', description: 'Immersive sound quality with noise cancellation.', price: 89.99, category: 'Hardware', thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop', stock: 30 },
   { id: 'prod3', name: 'Gamesplay T-Shirt', description: '100% cotton limited edition Gamesplay merch.', price: 24.99, category: 'Merchandise', thumbnail: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&h=300&fit=crop', stock: 100 },
 ];
 
-const orders = [];
+const orders: Order[] = [];
 
 // API Endpoints
 app.get('/api/games', async (req, res) => {
@@ -127,11 +128,21 @@ app.get('/api/products', (req, res) => {
 
 app.post('/api/orders', (req, res) => {
   const { userId, productId, quantity } = req.body;
+
+  if (!quantity || quantity <= 0) {
+    return res.status(400).json({ message: 'Quantity must be a positive number' });
+  }
+
   const product = products.find(p => p.id === productId);
   if (!product) {
     return res.status(404).json({ message: 'Product not found' });
   }
-  const newOrder = {
+
+  if (product.stock < quantity) {
+    return res.status(400).json({ message: 'Insufficient stock' });
+  }
+
+  const newOrder: Order = {
     id: `ord${orders.length + 1}`,
     userId,
     productId,
@@ -140,6 +151,8 @@ app.post('/api/orders', (req, res) => {
     status: 'pending',
     createdAt: new Date().toISOString()
   };
+
+  product.stock -= quantity;
   orders.push(newOrder);
   res.status(201).json(newOrder);
 });
