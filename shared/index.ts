@@ -57,3 +57,23 @@ export interface MusicTrack {
   thumbnail: string;
   audioUrl: string;
 }
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  thumbnail: string;
+  stock: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  productId: string;
+  quantity: number;
+  totalPrice: number;
+  status: 'pending' | 'shipped' | 'delivered';
+  createdAt: string;
+}

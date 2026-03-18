@@ -6,6 +6,7 @@ import DNSSetup from './pages/DNSSetup';
 import PlatformURL from './pages/PlatformURL';
 import GameCreator from './pages/GameCreator';
 import Entertainment from './pages/Entertainment';
+import Shop from './pages/Shop';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/setup-dns" element={<DNSSetup />} />
         <Route path="/platform-url" element={<PlatformURL />} />
         <Route path="/entertainment" element={<Entertainment />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
     </Router>
   );
