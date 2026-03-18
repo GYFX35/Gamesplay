@@ -31,3 +31,13 @@ export const getMusicTracks = async () => {
   const response = await axios.get(`${API_URL}/music`);
   return response.data;
 };
+
+export const getProducts = async () => {
+  const response = await axios.get(`${API_URL}/products`);
+  return response.data;
+};
+
+export const createOrder = async (orderData: { userId: string, productId: string, quantity: number }) => {
+  const response = await axios.post(`${API_URL}/orders`, orderData);
+  return response.data;
+};

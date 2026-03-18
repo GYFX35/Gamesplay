@@ -17,7 +17,8 @@ const resources = {
       "entertainment": "Entertainment",
       "extension": "Extension",
       "dns_setup": "DNS Setup",
-      "platform_url": "Platform URL"
+      "platform_url": "Platform URL",
+      "shop": "Shop"
     }
   },
   es: {
@@ -34,7 +35,8 @@ const resources = {
       "entertainment": "Entretenimiento",
       "extension": "Extensión",
       "dns_setup": "Configuración DNS",
-      "platform_url": "URL de la plataforma"
+      "platform_url": "URL de la plataforma",
+      "shop": "Tienda"
     }
   },
   jp: {
@@ -51,7 +53,8 @@ const resources = {
       "entertainment": "エンターテインメント",
       "extension": "拡張機能",
       "dns_setup": "DNS設定",
-      "platform_url": "プラットフォームURL"
+      "platform_url": "プラットフォームURL",
+      "shop": "ショップ"
     }
   }
 };
