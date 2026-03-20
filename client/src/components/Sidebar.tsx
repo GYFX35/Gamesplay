@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -54,6 +54,14 @@ const Sidebar: React.FC = () => {
             >
               <ShoppingCart size={20} />
               <span className="text-sm font-semibold hidden md:block">{t('shop')}</span>
+            </Link>
+            <Link
+              to="/sports"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/sports') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title={t('sports')}
+            >
+              <Trophy size={20} />
+              <span className="text-sm font-semibold hidden md:block">{t('sports')}</span>
             </Link>
             <Link
               to="/extension"
