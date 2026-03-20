@@ -7,6 +7,7 @@ import PlatformURL from './pages/PlatformURL';
 import GameCreator from './pages/GameCreator';
 import Entertainment from './pages/Entertainment';
 import Shop from './pages/Shop';
+import Sports from './pages/Sports';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/platform-url" element={<PlatformURL />} />
         <Route path="/entertainment" element={<Entertainment />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/sports" element={<Sports />} />
       </Routes>
     </Router>
   );

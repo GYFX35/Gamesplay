@@ -37,6 +37,16 @@ export const getProducts = async () => {
   return response.data;
 };
 
+export const getSportsNews = async () => {
+  const response = await axios.get(`${API_URL}/sports/news`);
+  return response.data;
+};
+
+export const getSportsStreams = async () => {
+  const response = await axios.get(`${API_URL}/sports/streams`);
+  return response.data;
+};
+
 export const createOrder = async (orderData: { userId: string, productId: string, quantity: number }) => {
   const response = await axios.post(`${API_URL}/orders`, orderData);
   return response.data;

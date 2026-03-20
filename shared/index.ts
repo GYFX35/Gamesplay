@@ -77,3 +77,24 @@ export interface Order {
   status: 'pending' | 'shipped' | 'delivered';
   createdAt: string;
 }
+
+export interface SportsNews {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  thumbnail: string;
+  category: string;
+  publishedAt: string;
+}
+
+export interface SportsStream {
+  id: string;
+  title: string;
+  league: string;
+  homeTeam: string;
+  awayTeam: string;
+  viewerCount: number;
+  thumbnail: string;
+  isLive: boolean;
+}

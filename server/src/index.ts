@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order } from '../../shared';
+import { Product, Order, SportsNews, SportsStream } from '../../shared';
 
 dotenv.config();
 
@@ -53,6 +53,18 @@ const products: Product[] = [
 ];
 
 const orders: Order[] = [];
+
+const sportsNews: SportsNews[] = [
+  { id: 'sn1', title: 'Global MMA Championship 2024: The Road to the Title', summary: 'Everything you need to know about the upcoming MMA championship.', content: 'The MMA world is buzzing with excitement as the Global Championship approaches. This year, we expect to see unprecedented talent and thrilling matches.', thumbnail: 'https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=800&h=450&fit=crop', category: 'MMA', publishedAt: new Date().toISOString() },
+  { id: 'sn2', title: 'Top 5 Rising Stars in Esports Racing', summary: 'Meet the newcomers who are taking the racing world by storm.', content: 'Esports racing has seen a massive surge in popularity, and these five drivers are leading the charge into the future of competitive gaming.', thumbnail: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=800&h=450&fit=crop', category: 'Esports', publishedAt: new Date().toISOString() },
+  { id: 'sn3', title: 'Cyber Basketball League: Season Highlights', summary: 'A look back at the most incredible moments from the latest CBL season.', content: 'The Cyber Basketball League has just wrapped up its most successful season yet. Here are the dunks, steals, and game-winners that defined the year.', thumbnail: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=450&fit=crop', category: 'Basketball', publishedAt: new Date().toISOString() },
+];
+
+const sportsStreams: SportsStream[] = [
+  { id: 'ss1', title: 'Main Event: Heavyweight Showdown', league: 'Gamesplay MMA', homeTeam: 'Striker King', awayTeam: 'Grapple Master', viewerCount: 50000, thumbnail: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=400&h=225&fit=crop', isLive: true },
+  { id: 'ss2', title: 'Regional Qualifiers: European Division', league: 'Cyber Football League', homeTeam: 'London Sparks', awayTeam: 'Paris Titans', viewerCount: 15000, thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=225&fit=crop', isLive: true },
+  { id: 'ss3', title: 'Ultimate Tennis Masters: Quarterfinals', league: 'Pro Tennis Virtual', homeTeam: 'Ace Venturer', awayTeam: 'Racket Rocket', viewerCount: 8000, thumbnail: 'https://images.unsplash.com/photo-1595435064212-c481782144f4?w=400&h=225&fit=crop', isLive: false },
+];
 
 // API Endpoints
 app.get('/api/games', async (req, res) => {
@@ -124,6 +136,14 @@ app.get('/api/music', (req, res) => {
 
 app.get('/api/products', (req, res) => {
   res.json(products);
+});
+
+app.get('/api/sports/news', (req, res) => {
+  res.json(sportsNews);
+});
+
+app.get('/api/sports/streams', (req, res) => {
+  res.json(sportsStreams);
 });
 
 app.post('/api/orders', (req, res) => {
