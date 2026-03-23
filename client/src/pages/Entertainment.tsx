@@ -4,8 +4,10 @@ import Sidebar from '../components/Sidebar';
 import { getMusicTracks } from '../utils/api';
 import { MusicTrack } from '../../../shared/index';
 import { Play, Pause, SkipBack, SkipForward, Volume2, ListMusic, Disc, Music } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Entertainment: React.FC = () => {
+  const { t } = useTranslation();
   const [tracks, setTracks] = useState<MusicTrack[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentTrack, setCurrentTrack] = useState<MusicTrack | null>(null);
@@ -89,9 +91,9 @@ const Entertainment: React.FC = () => {
           <header className="mb-8">
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Disc className="text-[#a970ff]" />
-              Entertainment
+              {t('entertainment')}
             </h1>
-            <p className="text-gray-400">Stream your favorite gaming music and soundtracks.</p>
+            <p className="text-gray-400">{t('entertainment_tagline')}</p>
           </header>
 
           <div className="flex-1 flex flex-col lg:flex-row gap-8 overflow-hidden">
@@ -106,7 +108,7 @@ const Entertainment: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                   <div className="absolute bottom-6 left-6">
-                    <span className="bg-[#a970ff] text-white text-xs font-bold px-2 py-1 rounded uppercase mb-2 inline-block">Featured Playlist</span>
+                    <span className="bg-[#a970ff] text-white text-xs font-bold px-2 py-1 rounded uppercase mb-2 inline-block">{t('featured_playlist')}</span>
                     <h2 className="text-4xl font-black text-white">Cyberpunk Beats 2077</h2>
                     <p className="text-gray-300 max-w-md mt-2">The ultimate collection of synthwave and electronic tracks for your next gaming session.</p>
                   </div>
@@ -158,7 +160,7 @@ const Entertainment: React.FC = () => {
 
             {/* Now Playing Sidebar */}
             <div className="w-full lg:w-80 bg-[#18181b] rounded-xl p-6 border border-[#2d2d30] flex flex-col items-center text-center shadow-2xl">
-              <h3 className="text-xs font-bold uppercase text-gray-400 mb-6 w-full text-left">Now Playing</h3>
+              <h3 className="text-xs font-bold uppercase text-gray-400 mb-6 w-full text-left">{t('now_playing')}</h3>
               {currentTrack ? (
                 <>
                   <div className="relative mb-6">
@@ -221,7 +223,7 @@ const Entertainment: React.FC = () => {
               ) : (
                 <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
                   <Disc size={48} className="mb-4 opacity-20 animate-spin-slow" />
-                  <p>Select a track to start listening</p>
+                  <p>{t('select_track')}</p>
                 </div>
               )}
             </div>

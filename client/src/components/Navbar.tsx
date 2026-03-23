@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search"
+            placeholder={t('search_placeholder')}
             className="w-full bg-[#3a3a3c] border border-transparent focus:border-[#a970ff] focus:bg-black rounded-md py-1.5 px-3 pl-10 outline-none transition-all"
           />
           <Search className="absolute left-3 top-2 text-gray-400" size={18} />
@@ -42,6 +42,7 @@ const Navbar: React.FC = () => {
           <div className="absolute right-0 mt-2 w-32 bg-[#18181b] border border-[#2d2d30] rounded-md shadow-lg hidden group-hover:block overflow-hidden z-50">
             <button onClick={() => changeLanguage('en')} className="w-full text-left px-4 py-2 text-sm hover:bg-[#2d2d30]">English</button>
             <button onClick={() => changeLanguage('es')} className="w-full text-left px-4 py-2 text-sm hover:bg-[#2d2d30]">Español</button>
+            <button onClick={() => changeLanguage('fr')} className="w-full text-left px-4 py-2 text-sm hover:bg-[#2d2d30]">Français</button>
             <button onClick={() => changeLanguage('jp')} className="w-full text-left px-4 py-2 text-sm hover:bg-[#2d2d30]">日本語</button>
           </div>
         </div>

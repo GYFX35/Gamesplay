@@ -55,8 +55,8 @@ const Home: React.FC = () => {
 
           <section>
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Live Channels We Think You'll Like</h2>
-                <Link to="/browse" className="text-[#a970ff] hover:underline text-sm font-semibold">See all</Link>
+                <h2 className="text-2xl font-bold">{t('live_channels_like')}</h2>
+                <Link to="/browse" className="text-[#a970ff] hover:underline text-sm font-semibold">{t('see_all')}</Link>
             </div>
 
             {loading ? (
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                         <div className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-sm uppercase tracking-wider">Live</div>
                         <div className="absolute bottom-3 left-3 text-white text-xs font-bold drop-shadow-md bg-black/40 px-2 py-1 rounded backdrop-blur-sm">
-                            {stream.viewerCount.toLocaleString()} viewers
+                            {t('viewers_count', { count: stream.viewerCount })}
                         </div>
                     </div>
                     <div className="flex space-x-3">
@@ -90,7 +90,7 @@ const Home: React.FC = () => {
                         <div className="overflow-hidden">
                         <h3 className="font-bold truncate group-hover:text-[#a970ff] transition-colors leading-tight">{stream.title}</h3>
                         <p className="text-sm text-gray-400 mt-0.5">Streamer_{stream.userId}</p>
-                        <p className="text-xs text-gray-500 font-medium">3D Interaction</p>
+                        <p className="text-xs text-gray-500 font-medium">{t('interaction_3d')}</p>
                         </div>
                     </div>
                     </Link>

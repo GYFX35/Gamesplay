@@ -41,7 +41,7 @@ const Sports: React.FC = () => {
               <Trophy className="text-[#a970ff]" />
               {t('sports')}
             </h1>
-            <p className="text-gray-400">Catch the latest scores, news, and live action from the world of sports.</p>
+            <p className="text-gray-400">{t('sports_tagline')}</p>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -50,7 +50,7 @@ const Sports: React.FC = () => {
               <section>
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                   <Play size={20} className="text-[#a970ff]" />
-                  Live Sports Streams
+                  {t('live_sports_streams')}
                 </h2>
                 {loading ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -66,7 +66,7 @@ const Sports: React.FC = () => {
                           <img src={stream.thumbnail} alt={stream.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                           {stream.isLive && (
                             <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">
-                              Live
+                              {t('live')}
                             </div>
                           )}
                           <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-1.5 py-0.5 rounded flex items-center gap-1">
@@ -89,7 +89,7 @@ const Sports: React.FC = () => {
               <section>
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                   <Newspaper size={20} className="text-[#a970ff]" />
-                  Latest Sports News
+                  {t('latest_sports_news')}
                 </h2>
                 {loading ? (
                   <div className="space-y-4">

@@ -13,7 +13,7 @@ const Sidebar: React.FC = () => {
     <aside className="bg-[#1f1f23] w-12 md:w-60 h-[calc(100vh-3rem)] fixed left-0 top-12 overflow-y-auto hidden sm:block border-r border-[#2d2d30]">
       <div className="p-2 md:p-4 space-y-6">
         <div>
-          <h2 className="text-xs font-bold uppercase text-gray-400 mb-2 px-2 hidden md:block">Menu</h2>
+          <h2 className="text-xs font-bold uppercase text-gray-400 mb-2 px-2 hidden md:block">{t('menu')}</h2>
           <div className="space-y-1">
             <Link
               to="/"
