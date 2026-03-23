@@ -3,15 +3,20 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import GamePlayer from '../components/GamePlayer';
-import { Settings, Flag, Share2, Heart } from 'lucide-react';
-import { getStreamById } from '../utils/api';
+import { Settings, Flag, Share2, DollarSign, Star } from 'lucide-react';
+import { getStreamById, subscribeToStreamer, donateToStreamer } from '../utils/api';
+import { useTranslation } from 'react-i18next';
 import { io, Socket } from 'socket.io-client';
 
 const StreamView: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const [stream, setStream] = useState<any>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [showDonationModal, setShowDonationModal] = useState(false);
+  const [donationAmount, setDonationAmount] = useState('5');
+  const [donationMsg, setDonationMsg] = useState('');
   const socketRef = useRef<Socket | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +44,15 @@ const StreamView: React.FC = () => {
       setMessages((prev) => [...prev, message]);
     });
 
+    socketRef.current.on('new-donation', (donation) => {
+      setMessages((prev) => [...prev, {
+        id: donation.id,
+        username: 'SYSTEM',
+        message: `🌟 ${donation.userId} donated $${donation.amount}! ${donation.message || ''}`,
+        isSystem: true
+      }]);
+    });
+
     return () => {
       socketRef.current?.disconnect();
     };
@@ -48,6 +62,12 @@ const StreamView: React.FC = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    if (stream && socketRef.current) {
+      socketRef.current.emit('join-stream', stream.userId);
+    }
+  }, [stream]);
+
   const handleSendMessage = () => {
     if (inputMessage.trim() && socketRef.current) {
       socketRef.current.emit('send-message', {
@@ -56,6 +76,34 @@ const StreamView: React.FC = () => {
         username: 'Viewer_' + Math.floor(Math.random() * 1000)
       });
       setInputMessage('');
+    }
+  };
+
+  const handleSubscribe = async () => {
+    try {
+      await subscribeToStreamer({
+        userId: 'Viewer_' + Math.floor(Math.random() * 1000),
+        streamerId: stream.userId,
+        tier: 1
+      });
+      alert('Subscribed successfully!');
+    } catch (error) {
+      console.error('Error subscribing:', error);
+    }
+  };
+
+  const handleDonate = async () => {
+    try {
+      await donateToStreamer({
+        userId: 'Viewer_' + Math.floor(Math.random() * 1000),
+        streamerId: stream.userId,
+        amount: parseFloat(donationAmount),
+        message: donationMsg
+      });
+      setShowDonationModal(false);
+      setDonationMsg('');
+    } catch (error) {
+      console.error('Error donating:', error);
     }
   };
 
@@ -90,9 +138,19 @@ const StreamView: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-2 mt-4 md:mt-0">
-                <button className="bg-[#a970ff] hover:bg-[#9147ff] flex items-center space-x-2 px-4 py-2 rounded font-bold transition-all transform active:scale-95">
-                  <Heart size={18} />
-                  <span>Follow</span>
+                <button
+                  onClick={handleSubscribe}
+                  className="bg-[#a970ff] hover:bg-[#9147ff] flex items-center space-x-2 px-4 py-2 rounded font-bold transition-all transform active:scale-95"
+                >
+                  <Star size={18} />
+                  <span>{t('subscribe')}</span>
+                </button>
+                <button
+                  onClick={() => setShowDonationModal(true)}
+                  className="bg-[#2d2d30] hover:bg-[#3a3a3c] flex items-center space-x-2 px-4 py-2 rounded font-bold transition-colors"
+                >
+                  <DollarSign size={18} />
+                  <span>{t('donate')}</span>
                 </button>
                 <button className="bg-[#2d2d30] hover:bg-[#3a3a3c] p-2 rounded transition-colors">
                   <Share2 size={20} />
@@ -108,11 +166,11 @@ const StreamView: React.FC = () => {
             </div>
             <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
               {messages.map((msg, i) => (
-                <div key={msg.id || i} className="text-sm leading-relaxed">
-                  <span className="font-bold" style={{ color: `hsl(${msg.username.length * 50}, 70%, 70%)` }}>
+                <div key={msg.id || i} className={`text-sm leading-relaxed ${msg.isSystem ? 'bg-[#a970ff]/10 p-2 rounded border border-[#a970ff]/20' : ''}`}>
+                  <span className="font-bold" style={{ color: msg.isSystem ? '#a970ff' : `hsl(${msg.username.length * 50}, 70%, 70%)` }}>
                     {msg.username}:
                   </span>
-                  <span className="text-gray-200 ml-2">{msg.message}</span>
+                  <span className={msg.isSystem ? 'text-[#a970ff] font-semibold ml-2' : 'text-gray-200 ml-2'}>{msg.message}</span>
                 </div>
               ))}
               <div ref={chatEndRef} />
@@ -144,6 +202,58 @@ const StreamView: React.FC = () => {
           </div>
         </main>
       </div>
+      {showDonationModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="bg-[#1f1f23] w-full max-w-md rounded-xl border border-[#2d2d30] shadow-2xl p-6">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <DollarSign className="text-[#a970ff]" />
+              {t('send_donation')}
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Amount</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {['5', '10', '20', '50'].map(val => (
+                    <button
+                      key={val}
+                      onClick={() => setDonationAmount(val)}
+                      className={`py-2 rounded font-bold transition-all ${donationAmount === val ? 'bg-[#a970ff] text-white' : 'bg-[#2d2d30] hover:bg-[#3a3a3c] text-gray-300'}`}
+                    >
+                      ${val}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">{t('donation_message')}</label>
+                <textarea
+                  value={donationMsg}
+                  onChange={(e) => setDonationMsg(e.target.value)}
+                  className="w-full bg-[#0e0e10] border border-[#2d2d30] focus:border-[#a970ff] rounded-md p-3 outline-none transition-all h-24 resize-none"
+                  placeholder="Tell the streamer something..."
+                />
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setShowDonationModal(false)}
+                  className="flex-1 bg-[#2d2d30] hover:bg-[#3a3a3c] py-3 rounded-lg font-bold transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDonate}
+                  className="flex-1 bg-[#a970ff] hover:bg-[#9147ff] py-3 rounded-lg font-bold transition-all shadow-lg shadow-[#a970ff]/20 active:scale-[0.98]"
+                >
+                  {t('donate_amount', { amount: donationAmount })}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

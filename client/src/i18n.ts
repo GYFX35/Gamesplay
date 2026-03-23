@@ -28,7 +28,18 @@ const resources = {
       "free_shipping": "Free shipping worldwide",
       "launch_store": "Launch Your Own Store",
       "creator_dropshipping": "Are you a content creator? Use our dropshipping integration to sell your own branded merchandise directly to your audience with zero upfront costs. We handle printing, shipping, and customer service.",
-      "start_selling": "Start Selling"
+      "start_selling": "Start Selling",
+      "subscribe": "Subscribe",
+      "donate": "Donate",
+      "subscription_tier": "Tier {{tier}}",
+      "donate_amount": "Donate ${{amount}}",
+      "monetization": "Monetization",
+      "total_revenue": "Total Revenue",
+      "subscribers": "Subscribers",
+      "recent_donations": "Recent Donations",
+      "revenue_overview": "Revenue Overview",
+      "send_donation": "Send Donation",
+      "donation_message": "Donation Message (Optional)"
     }
   },
   es: {
@@ -56,7 +67,18 @@ const resources = {
       "free_shipping": "Envío gratis a todo el mundo",
       "launch_store": "Lanza tu propia tienda",
       "creator_dropshipping": "¿Eres un creador de contenido? Utiliza nuestra integración de dropshipping para vender tu propia mercancía de marca directamente a tu audiencia sin costos iniciales. Nos encargamos de la impresión, el envío y el servicio al cliente.",
-      "start_selling": "Empieza a vender"
+      "start_selling": "Empieza a vender",
+      "subscribe": "Suscribirse",
+      "donate": "Donar",
+      "subscription_tier": "Nivel {{tier}}",
+      "donate_amount": "Donar ${{amount}}",
+      "monetization": "Monetización",
+      "total_revenue": "Ingresos Totales",
+      "subscribers": "Suscriptores",
+      "recent_donations": "Donaciones Recientes",
+      "revenue_overview": "Resumen de Ingresos",
+      "send_donation": "Enviar Donación",
+      "donation_message": "Mensaje de Donación (Opcional)"
     }
   },
   jp: {
@@ -84,7 +106,18 @@ const resources = {
       "free_shipping": "世界中どこでも送料無料",
       "launch_store": "自分のストアを開設する",
       "creator_dropshipping": "あなたはコンテンツクリエイターですか？当社のドロップシッピング統合を利用して、初期費用なしで独自のブランド商品を視聴者に直接販売できます。印刷、配送、カスタマーサービスはすべて当社が担当します。",
-      "start_selling": "販売を開始する"
+      "start_selling": "販売を開始する",
+      "subscribe": "サブスクライブ",
+      "donate": "寄付する",
+      "subscription_tier": "ティア {{tier}}",
+      "donate_amount": "${{amount}} を寄付",
+      "monetization": "収益化",
+      "total_revenue": "総収益",
+      "subscribers": "サブスクライバー",
+      "recent_donations": "最近の寄付",
+      "revenue_overview": "収益の概要",
+      "send_donation": "寄付を送信",
+      "donation_message": "寄付メッセージ（任意）"
     }
   }
 };

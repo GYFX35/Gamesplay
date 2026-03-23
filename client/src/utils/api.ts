@@ -51,3 +51,18 @@ export const createOrder = async (orderData: { userId: string, productId: string
   const response = await axios.post(`${API_URL}/orders`, orderData);
   return response.data;
 };
+
+export const subscribeToStreamer = async (subData: { userId: string, streamerId: string, tier: number }) => {
+  const response = await axios.post(`${API_URL}/monetization/subscribe`, subData);
+  return response.data;
+};
+
+export const donateToStreamer = async (donationData: { userId: string, streamerId: string, amount: number, message?: string }) => {
+  const response = await axios.post(`${API_URL}/monetization/donate`, donationData);
+  return response.data;
+};
+
+export const getStreamerAnalytics = async (streamerId: string) => {
+  const response = await axios.get(`${API_URL}/monetization/analytics/${streamerId}`);
+  return response.data;
+};
