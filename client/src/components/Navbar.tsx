@@ -1,10 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Search, User, Bell, Gamepad2, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+declare global {
+  interface Window {
+    googleTranslateElementInit: () => void;
+    google: any;
+  }
+}
+
 const Navbar: React.FC = () => {
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const addGoogleTranslateScript = () => {
+      if (document.querySelector('script[src*="translate.google.com"]')) {
+        if (window.google && window.google.translate) {
+          window.googleTranslateElementInit();
+        }
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.body.appendChild(script);
+
+      window.googleTranslateElementInit = () => {
+        if (window.google && window.google.translate) {
+          new window.google.translate.TranslateElement(
+            { pageLanguage: 'en', layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE },
+            'google_translate_element'
+          );
+        }
+      };
+    };
+
+    addGoogleTranslateScript();
+  }, []);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -34,6 +68,7 @@ const Navbar: React.FC = () => {
       </div>
 
       <div className="flex items-center space-x-4">
+        <div id="google_translate_element" className="mr-2"></div>
         <div className="relative group">
           <button className="hover:bg-[#2d2d30] p-1 rounded cursor-pointer flex items-center">
             <Globe size={20} className="mr-1" />
