@@ -8,6 +8,7 @@ import GameCreator from './pages/GameCreator';
 import Entertainment from './pages/Entertainment';
 import Shop from './pages/Shop';
 import Sports from './pages/Sports';
+import Monetization from './pages/Monetization';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/entertainment" element={<Entertainment />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/sports" element={<Sports />} />
+        <Route path="/monetization" element={<Monetization />} />
       </Routes>
     </Router>
   );

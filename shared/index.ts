@@ -98,3 +98,28 @@ export interface SportsStream {
   thumbnail: string;
   isLive: boolean;
 }
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  streamerId: string;
+  tier: 1 | 2 | 3;
+  status: 'active' | 'cancelled' | 'expired';
+  expiresAt: string;
+}
+
+export interface Donation {
+  id: string;
+  userId: string;
+  streamerId: string;
+  amount: number;
+  message?: string;
+  timestamp: string;
+}
+
+export interface StreamerAnalytics {
+  totalRevenue: number;
+  subscriberCount: number;
+  recentDonations: Donation[];
+  revenueByMonth: { month: string, amount: number }[];
+}

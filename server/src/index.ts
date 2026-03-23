@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics } from '../../shared';
 
 dotenv.config();
 
@@ -53,6 +53,8 @@ const products: Product[] = [
 ];
 
 const orders: Order[] = [];
+const subscriptions: Subscription[] = [];
+const donations: Donation[] = [];
 
 const sportsNews: SportsNews[] = [
   { id: 'sn1', title: 'Global MMA Championship 2024: The Road to the Title', summary: 'Everything you need to know about the upcoming MMA championship.', content: 'The MMA world is buzzing with excitement as the Global Championship approaches. This year, we expect to see unprecedented talent and thrilling matches.', thumbnail: 'https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=800&h=450&fit=crop', category: 'MMA', publishedAt: new Date().toISOString() },
@@ -194,6 +196,60 @@ app.post('/api/ai/assist', (req, res) => {
     suggestion: `I've analyzed your request: "${prompt}". Based on MMA game mechanics, I suggest adding a stamina system to balance the combat.`,
     actions: ['Add Stamina Bar', 'Optimize Animations', 'Generate Sound Effects']
   });
+});
+
+app.post('/api/monetization/subscribe', (req, res) => {
+  const { userId, streamerId, tier } = req.body;
+  const newSub: Subscription = {
+    id: `sub${subscriptions.length + 1}`,
+    userId,
+    streamerId,
+    tier,
+    status: 'active',
+    expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+  };
+  subscriptions.push(newSub);
+  res.status(201).json(newSub);
+});
+
+app.post('/api/monetization/donate', (req, res) => {
+  const { userId, streamerId, amount, message } = req.body;
+  const newDonation: Donation = {
+    id: `don${donations.length + 1}`,
+    userId,
+    streamerId,
+    amount,
+    message,
+    timestamp: new Date().toISOString()
+  };
+  donations.push(newDonation);
+
+  // Emit donation to the stream
+  io.to(`stream:${streamerId}`).emit('new-donation', newDonation);
+
+  res.status(201).json(newDonation);
+});
+
+app.get('/api/monetization/analytics/:streamerId', (req, res) => {
+  const { streamerId } = req.params;
+  const streamerDonations = donations.filter(d => d.streamerId === streamerId);
+  const streamerSubs = subscriptions.filter(s => s.streamerId === streamerId);
+
+  const totalRevenue = streamerDonations.reduce((sum, d) => sum + d.amount, 0) +
+                       streamerSubs.reduce((sum, s) => sum + (s.tier * 4.99), 0);
+
+  const analytics: StreamerAnalytics = {
+    totalRevenue,
+    subscriberCount: streamerSubs.length,
+    recentDonations: streamerDonations.slice(-5).reverse(),
+    revenueByMonth: [
+      { month: 'Jan', amount: totalRevenue * 0.1 },
+      { month: 'Feb', amount: totalRevenue * 0.15 },
+      { month: 'Mar', amount: totalRevenue * 0.25 },
+      { month: 'Apr', amount: totalRevenue * 0.5 }
+    ]
+  };
+  res.json(analytics);
 });
 
 // Socket.io for Real-time features

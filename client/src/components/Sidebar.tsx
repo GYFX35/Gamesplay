@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy, TrendingUp } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +62,14 @@ const Sidebar: React.FC = () => {
             >
               <Trophy size={20} />
               <span className="text-sm font-semibold hidden md:block">{t('sports')}</span>
+            </Link>
+            <Link
+              to="/monetization"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/monetization') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title={t('monetization')}
+            >
+              <TrendingUp size={20} />
+              <span className="text-sm font-semibold hidden md:block">{t('monetization')}</span>
             </Link>
             <Link
               to="/extension"
