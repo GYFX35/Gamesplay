@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject } from '../../shared';
 
 dotenv.config();
 
@@ -36,9 +36,36 @@ const streams = [
   { id: '2', userId: 'u2', gameId: '2', title: 'Ranked racing to Top 10', viewerCount: 850, startedAt: new Date().toISOString() },
 ];
 
-const projects = [
-  { id: 'p1', userId: 'u1', name: 'My First MMA Game', description: 'A basic MMA fighting game.', lastModified: new Date().toISOString(), assets: ['fighter.glb', 'arena.glb'] },
+const projects: GameProject[] = [
+  {
+    id: 'p1',
+    userId: 'u1',
+    name: 'My First MMA Game',
+    description: 'A basic MMA fighting game.',
+    lastModified: new Date().toISOString(),
+    assets: ['fighter.glb', 'arena.glb'],
+    config: {
+      physicsEngine: 'cannon',
+      renderer: 'webgl',
+      aiEnabled: true,
+      multiplayerEnabled: false
+    }
+  },
 ];
+
+const researchData: Record<string, ResearchData> = {
+  'p1': {
+    projectId: 'p1',
+    metrics: [
+      { label: 'Combat Fluidity', value: 8.5, unit: '/10', trend: 'up' },
+      { label: 'AI Response Time', value: 120, unit: 'ms', trend: 'down' },
+      { label: 'Physics Stability', value: 92, unit: '%', trend: 'neutral' }
+    ],
+    aiTrainingProgress: 75,
+    activeExperiments: 3,
+    playerRetention: [100, 85, 70, 65, 60, 58, 55]
+  }
+};
 
 const musicTracks = [
   { id: 'm1', title: 'Cybernetic Pulse', artist: 'Neon Voyager', album: 'Synth Horizons', duration: '3:45', thumbnail: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
@@ -130,6 +157,15 @@ app.get('/api/streams/:id', (req, res) => {
 
 app.get('/api/projects', (req, res) => {
   res.json(projects);
+});
+
+app.get('/api/projects/:id/research', (req, res) => {
+  const data = researchData[req.params.id];
+  if (data) {
+    res.json(data);
+  } else {
+    res.status(404).json({ message: 'Research data not found' });
+  }
 });
 
 app.get('/api/music', (req, res) => {

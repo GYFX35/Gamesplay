@@ -39,7 +39,11 @@ const resources = {
       "recent_donations": "Recent Donations",
       "revenue_overview": "Revenue Overview",
       "send_donation": "Send Donation",
-      "donation_message": "Donation Message (Optional)"
+      "donation_message": "Donation Message (Optional)",
+      "research_lab": "Research Lab",
+      "ai_training": "AI Training",
+      "player_metrics": "Player Metrics",
+      "experimentation": "Experimentation"
     }
   },
   es: {
@@ -78,7 +82,11 @@ const resources = {
       "recent_donations": "Donaciones Recientes",
       "revenue_overview": "Resumen de Ingresos",
       "send_donation": "Enviar Donación",
-      "donation_message": "Mensaje de Donación (Opcional)"
+      "donation_message": "Mensaje de Donación (Opcional)",
+      "research_lab": "Laboratorio de Investigación",
+      "ai_training": "Entrenamiento de IA",
+      "player_metrics": "Métricas de Jugador",
+      "experimentation": "Experimentación"
     }
   },
   jp: {
@@ -117,7 +125,11 @@ const resources = {
       "recent_donations": "最近の寄付",
       "revenue_overview": "収益の概要",
       "send_donation": "寄付を送信",
-      "donation_message": "寄付メッセージ（任意）"
+      "donation_message": "寄付メッセージ（任意）",
+      "research_lab": "研究ラボ",
+      "ai_training": "AIトレーニング",
+      "player_metrics": "プレイヤー指標",
+      "experimentation": "実験"
     }
   }
 };
