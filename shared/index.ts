@@ -46,6 +46,29 @@ export interface GameProject {
   description: string;
   lastModified: string;
   assets: string[];
+  config?: GameProjectConfig;
+}
+
+export interface GameProjectConfig {
+  physicsEngine: 'cannon' | 'ammo' | 'physx';
+  renderer: 'webgl' | 'webgpu';
+  aiEnabled: boolean;
+  multiplayerEnabled: boolean;
+}
+
+export interface ResearchMetric {
+  label: string;
+  value: number;
+  unit: string;
+  trend: 'up' | 'down' | 'neutral';
+}
+
+export interface ResearchData {
+  projectId: string;
+  metrics: ResearchMetric[];
+  aiTrainingProgress: number;
+  activeExperiments: number;
+  playerRetention: number[];
 }
 
 export interface MusicTrack {
