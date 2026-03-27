@@ -1,50 +1,67 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import { getMusicTracks } from '../utils/api';
-import { MusicTrack } from '../../../shared/index';
-import { Play, Pause, SkipBack, SkipForward, Volume2, ListMusic, Disc, Music } from 'lucide-react';
+import { getMusicTracks, getVideoTracks } from '../utils/api';
+import { MusicTrack, VideoTrack } from '../../../shared/index';
+import { Play, Pause, SkipBack, SkipForward, Volume2, ListMusic, Disc, Music, Video, Eye } from 'lucide-react';
 
 const Entertainment: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'music' | 'video'>('music');
   const [tracks, setTracks] = useState<MusicTrack[]>([]);
+  const [videos, setVideos] = useState<VideoTrack[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentTrack, setCurrentTrack] = useState<MusicTrack | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<VideoTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [volume, setVolume] = useState(0.75);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    const fetchMusic = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getMusicTracks();
-        setTracks(data);
-        if (data.length > 0) {
-          setCurrentTrack(data[0]);
+        const [musicData, videoData] = await Promise.all([
+          getMusicTracks(),
+          getVideoTracks()
+        ]);
+        setTracks(musicData);
+        setVideos(videoData);
+        if (musicData.length > 0) {
+          setCurrentTrack(musicData[0]);
         }
       } catch (error) {
-        console.error('Error fetching music:', error);
+        console.error('Error fetching entertainment data:', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchMusic();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    if (currentTrack && isPlaying) {
-      audioRef.current?.play().catch(e => console.error("Playback failed", e));
+    if (activeTab === 'music') {
+      videoRef.current?.pause();
+      if (currentTrack && isPlaying) {
+        audioRef.current?.play().catch(e => console.error("Audio playback failed", e));
+      } else {
+        audioRef.current?.pause();
+      }
     } else {
       audioRef.current?.pause();
+      if (currentVideo && isPlaying) {
+        videoRef.current?.play().catch(e => console.error("Video playback failed", e));
+      } else {
+        videoRef.current?.pause();
+      }
     }
-  }, [currentTrack, isPlaying]);
+  }, [currentTrack, currentVideo, isPlaying, activeTab]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
+    if (audioRef.current) audioRef.current.volume = volume;
+    if (videoRef.current) videoRef.current.volume = volume;
   }, [volume]);
 
   const togglePlay = () => {
@@ -60,10 +77,20 @@ const Entertainment: React.FC = () => {
     }
   };
 
+  const handleVideoSelect = (video: VideoTrack) => {
+    if (currentVideo?.id === video.id) {
+      togglePlay();
+    } else {
+      setCurrentVideo(video);
+      setIsPlaying(true);
+    }
+  };
+
   const onTimeUpdate = () => {
-    if (audioRef.current) {
-      const current = audioRef.current.currentTime;
-      const duration = audioRef.current.duration;
+    const media = activeTab === 'music' ? audioRef.current : videoRef.current;
+    if (media) {
+      const current = media.currentTime;
+      const duration = media.duration;
       if (duration) {
         setProgress((current / duration) * 100);
       }
@@ -86,12 +113,30 @@ const Entertainment: React.FC = () => {
       <div className="flex pt-12">
         <Sidebar />
         <main className="flex-1 ml-0 sm:ml-12 md:ml-60 p-6 flex flex-col h-[calc(100vh-3rem)]">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Disc className="text-[#a970ff]" />
-              Entertainment
-            </h1>
-            <p className="text-gray-400">Stream your favorite gaming music and soundtracks.</p>
+          <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold flex items-center gap-2">
+                <Disc className="text-[#a970ff]" />
+                Entertainment
+              </h1>
+              <p className="text-gray-400">Stream your favorite gaming music, soundtracks, and videos.</p>
+            </div>
+            <div className="flex bg-[#18181b] p-1 rounded-lg border border-[#2d2d30]">
+              <button
+                onClick={() => { setActiveTab('music'); setIsPlaying(false); audioRef.current?.pause(); videoRef.current?.pause(); }}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${activeTab === 'music' ? 'bg-[#a970ff] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+              >
+                <Music size={18} />
+                <span className="font-bold text-sm">Music</span>
+              </button>
+              <button
+                onClick={() => { setActiveTab('video'); setIsPlaying(false); audioRef.current?.pause(); videoRef.current?.pause(); }}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${activeTab === 'video' ? 'bg-[#a970ff] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+              >
+                <Video size={18} />
+                <span className="font-bold text-sm">Videos</span>
+              </button>
+            </div>
           </header>
 
           <div className="flex-1 flex flex-col lg:flex-row gap-8 overflow-hidden">
@@ -100,22 +145,22 @@ const Entertainment: React.FC = () => {
               <section>
                 <div className="relative h-64 rounded-xl overflow-hidden group">
                   <img
-                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=400&fit=crop"
+                    src={activeTab === 'music' ? "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=400&fit=crop" : "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=400&fit=crop"}
                     alt="Featured"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                   <div className="absolute bottom-6 left-6">
-                    <span className="bg-[#a970ff] text-white text-xs font-bold px-2 py-1 rounded uppercase mb-2 inline-block">Featured Playlist</span>
-                    <h2 className="text-4xl font-black text-white">Cyberpunk Beats 2077</h2>
-                    <p className="text-gray-300 max-w-md mt-2">The ultimate collection of synthwave and electronic tracks for your next gaming session.</p>
+                    <span className="bg-[#a970ff] text-white text-xs font-bold px-2 py-1 rounded uppercase mb-2 inline-block">Featured {activeTab === 'music' ? 'Playlist' : 'Video'}</span>
+                    <h2 className="text-4xl font-black text-white">{activeTab === 'music' ? 'Cyberpunk Beats 2077' : 'MMA World Finals 2024'}</h2>
+                    <p className="text-gray-300 max-w-md mt-2">{activeTab === 'music' ? 'The ultimate collection of synthwave and electronic tracks for your next gaming session.' : 'Relive the most intense moments from the global championship.'}</p>
                   </div>
                 </div>
               </section>
 
               <section>
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                  <ListMusic size={20} className="text-[#a970ff]" />
+                  {activeTab === 'music' ? <ListMusic size={20} className="text-[#a970ff]" /> : <Video size={20} className="text-[#a970ff]" />}
                   Latest Releases
                 </h3>
                 {loading ? (
@@ -124,7 +169,7 @@ const Entertainment: React.FC = () => {
                       <div key={i} className="h-16 bg-[#18181b] animate-pulse rounded-lg"></div>
                     ))}
                   </div>
-                ) : (
+                ) : activeTab === 'music' ? (
                   <div className="grid grid-cols-1 gap-2">
                     {tracks.map((track) => (
                       <div
@@ -152,77 +197,165 @@ const Entertainment: React.FC = () => {
                       </div>
                     ))}
                   </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {videos.map((video) => (
+                      <div
+                        key={video.id}
+                        onClick={() => handleVideoSelect(video)}
+                        className={`group relative rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${currentVideo?.id === video.id ? 'border-[#a970ff]' : 'border-transparent bg-[#18181b]'}`}
+                      >
+                        <div className="relative aspect-video">
+                          <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="bg-[#a970ff] p-3 rounded-full">
+                              <Play fill="white" size={24} />
+                            </div>
+                          </div>
+                          <span className="absolute bottom-2 right-2 bg-black/80 text-[10px] font-bold px-1.5 py-0.5 rounded">{video.duration}</span>
+                        </div>
+                        <div className="p-3">
+                          <h4 className="font-bold truncate">{video.title}</h4>
+                          <div className="flex items-center justify-between mt-1">
+                            <p className="text-xs text-gray-400">{video.creator}</p>
+                            <div className="flex items-center gap-1 text-[10px] text-gray-500 font-bold">
+                              <Eye size={12} />
+                              {video.views.toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </section>
             </div>
 
-            {/* Now Playing Sidebar */}
+            {/* Player Sidebar */}
             <div className="w-full lg:w-80 bg-[#18181b] rounded-xl p-6 border border-[#2d2d30] flex flex-col items-center text-center shadow-2xl">
               <h3 className="text-xs font-bold uppercase text-gray-400 mb-6 w-full text-left">Now Playing</h3>
-              {currentTrack ? (
-                <>
-                  <div className="relative mb-6">
-                    <img
-                      src={currentTrack.thumbnail}
-                      alt={currentTrack.title}
-                      className="w-48 h-48 rounded-xl shadow-[0_0_30px_rgba(169,112,255,0.3)] object-cover"
+
+              {activeTab === 'music' ? (
+                currentTrack ? (
+                  <>
+                    <div className="relative mb-6">
+                      <img
+                        src={currentTrack.thumbnail}
+                        alt={currentTrack.title}
+                        className="w-48 h-48 rounded-xl shadow-[0_0_30px_rgba(169,112,255,0.3)] object-cover"
+                      />
+                      <div className="absolute -bottom-2 -right-2 bg-[#a970ff] p-2 rounded-full shadow-lg">
+                        <Music className="text-white" size={20} />
+                      </div>
+                    </div>
+                    <h4 className="text-xl font-bold mb-1 truncate w-full">{currentTrack.title}</h4>
+                    <p className="text-[#a970ff] font-medium mb-8">{currentTrack.artist}</p>
+
+                    <audio
+                      ref={audioRef}
+                      src={currentTrack.audioUrl}
+                      onTimeUpdate={onTimeUpdate}
+                      onEnded={onEnded}
                     />
-                    <div className="absolute -bottom-2 -right-2 bg-[#a970ff] p-2 rounded-full shadow-lg">
-                      <Music className="text-white" size={20} />
+
+                    {/* Progress Bar */}
+                    <div className="w-full mb-8">
+                      <div className="h-1 w-full bg-[#2d2d30] rounded-full overflow-hidden">
+                        <div className="h-full bg-[#a970ff] transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                      </div>
+                      <div className="flex justify-between mt-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                        <span>{currentTime}</span>
+                        <span>{currentTrack.duration}</span>
+                      </div>
                     </div>
-                  </div>
-                  <h4 className="text-xl font-bold mb-1 truncate w-full">{currentTrack.title}</h4>
-                  <p className="text-[#a970ff] font-medium mb-8">{currentTrack.artist}</p>
 
-                  {/* Audio Element (Hidden) */}
-                  <audio
-                    ref={audioRef}
-                    src={currentTrack.audioUrl}
-                    onTimeUpdate={onTimeUpdate}
-                    onEnded={onEnded}
-                  />
-
-                  {/* Progress Bar */}
-                  <div className="w-full mb-8">
-                    <div className="h-1 w-full bg-[#2d2d30] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#a970ff] transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                    {/* Controls */}
+                    <div className="flex items-center gap-6 mb-8">
+                      <button className="text-gray-400 hover:text-white transition-colors"><SkipBack fill="currentColor" size={24} /></button>
+                      <button
+                        onClick={togglePlay}
+                        className="bg-white text-black p-4 rounded-full hover:scale-105 transition-transform"
+                      >
+                        {isPlaying ? <Pause fill="black" size={24} /> : <Play fill="black" size={24} />}
+                      </button>
+                      <button className="text-gray-400 hover:text-white transition-colors"><SkipForward fill="currentColor" size={24} /></button>
                     </div>
-                    <div className="flex justify-between mt-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                      <span>{currentTime}</span>
-                      <span>{currentTrack.duration}</span>
+
+                    <div className="w-full flex items-center gap-3 text-gray-400 px-2 group">
+                      <Volume2 size={18} className="group-hover:text-white transition-colors" />
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={(e) => setVolume(parseFloat(e.target.value))}
+                        className="h-1 flex-1 bg-[#2d2d30] rounded-full appearance-none cursor-pointer accent-[#a970ff]"
+                      />
                     </div>
+                  </>
+                ) : (
+                  <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+                    <Disc size={48} className="mb-4 opacity-20 animate-spin-slow" />
+                    <p>Select a track to start listening</p>
                   </div>
-
-                  {/* Controls */}
-                  <div className="flex items-center gap-6 mb-8">
-                    <button className="text-gray-400 hover:text-white transition-colors"><SkipBack fill="currentColor" size={24} /></button>
-                    <button
-                      onClick={togglePlay}
-                      className="bg-white text-black p-4 rounded-full hover:scale-105 transition-transform"
-                    >
-                      {isPlaying ? <Pause fill="black" size={24} /> : <Play fill="black" size={24} />}
-                    </button>
-                    <button className="text-gray-400 hover:text-white transition-colors"><SkipForward fill="currentColor" size={24} /></button>
-                  </div>
-
-                  <div className="w-full flex items-center gap-3 text-gray-400 px-2 group">
-                    <Volume2 size={18} className="group-hover:text-white transition-colors" />
-                    <input
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.01"
-                      value={volume}
-                      onChange={(e) => setVolume(parseFloat(e.target.value))}
-                      className="h-1 flex-1 bg-[#2d2d30] rounded-full appearance-none cursor-pointer accent-[#a970ff]"
-                    />
-                  </div>
-                </>
+                )
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
-                  <Disc size={48} className="mb-4 opacity-20 animate-spin-slow" />
-                  <p>Select a track to start listening</p>
-                </div>
+                currentVideo ? (
+                  <>
+                    <div className="w-full aspect-video mb-6 rounded-lg overflow-hidden bg-black shadow-[0_0_30px_rgba(169,112,255,0.3)]">
+                      <video
+                        ref={videoRef}
+                        src={currentVideo.videoUrl}
+                        onTimeUpdate={onTimeUpdate}
+                        onEnded={onEnded}
+                        className="w-full h-full object-contain"
+                        controls={false}
+                      />
+                    </div>
+                    <h4 className="text-xl font-bold mb-1 truncate w-full">{currentVideo.title}</h4>
+                    <p className="text-[#a970ff] font-medium mb-8">{currentVideo.creator}</p>
+
+                    {/* Progress Bar */}
+                    <div className="w-full mb-8">
+                      <div className="h-1 w-full bg-[#2d2d30] rounded-full overflow-hidden">
+                        <div className="h-full bg-[#a970ff] transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                      </div>
+                      <div className="flex justify-between mt-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                        <span>{currentTime}</span>
+                        <span>{currentVideo.duration}</span>
+                      </div>
+                    </div>
+
+                    {/* Controls */}
+                    <div className="flex items-center gap-6 mb-8">
+                      <button
+                        onClick={togglePlay}
+                        className="bg-white text-black p-4 rounded-full hover:scale-105 transition-transform"
+                      >
+                        {isPlaying ? <Pause fill="black" size={24} /> : <Play fill="black" size={24} />}
+                      </button>
+                    </div>
+
+                    <div className="w-full flex items-center gap-3 text-gray-400 px-2 group">
+                      <Volume2 size={18} className="group-hover:text-white transition-colors" />
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={(e) => setVolume(parseFloat(e.target.value))}
+                        className="h-1 flex-1 bg-[#2d2d30] rounded-full appearance-none cursor-pointer accent-[#a970ff]"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+                    <Video size={48} className="mb-4 opacity-20" />
+                    <p>Select a video to start watching</p>
+                  </div>
+                )
               )}
             </div>
           </div>
