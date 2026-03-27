@@ -1,4 +1,8 @@
 
+> gamesplay@1.0.0 dev:server
+> npm run dev --workspace=server
+
+
 > server@1.0.0 dev
 > nodemon src/index.ts
 
@@ -7,4 +11,4 @@
 [33m[nodemon] watching path(s): *.*[39m
 [33m[nodemon] watching extensions: ts,json[39m
 [32m[nodemon] starting `ts-node src/index.ts`[39m
-Server running on port 3001
+Server running on http://0.0.0.0:3001

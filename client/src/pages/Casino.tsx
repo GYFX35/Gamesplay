@@ -57,7 +57,7 @@ const Casino: React.FC = () => {
               <Dices className="text-[#a970ff]" />
               {t('casino')}
             </h1>
-            <p className="text-gray-400">Play your favorite HTML5 casino games and place bets globally.</p>
+            <p className="text-gray-400">{t('casino_tagline')}</p>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -73,7 +73,7 @@ const Casino: React.FC = () => {
                     </h2>
                     <a href={selectedGame.gameUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
                       <ExternalLink size={12} />
-                      Open in New Tab
+                      {t('open_new_tab')}
                     </a>
                   </div>
                   <div className="aspect-video w-full bg-black relative">
@@ -114,7 +114,7 @@ const Casino: React.FC = () => {
                         <h3 className="font-bold">{game.title}</h3>
                         <p className="text-xs text-gray-400 flex items-center gap-1 mt-1">
                           <Info size={12} />
-                          HTML5 Integrated
+                          {t('html5_integrated')}
                         </p>
                       </div>
                     </div>
@@ -133,7 +133,7 @@ const Casino: React.FC = () => {
 
                 {!selectedGame ? (
                   <div className="text-gray-500 text-center py-8">
-                    <p>Select a game to start betting</p>
+                    <p>{t('select_game_to_bet')}</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -157,7 +157,7 @@ const Casino: React.FC = () => {
                       disabled={isPlacingBet}
                       className="w-full bg-[#a970ff] hover:bg-[#9147ff] disabled:bg-gray-600 text-white font-bold py-3 rounded-md transition-colors"
                     >
-                      {isPlacingBet ? 'Processing...' : t('place_bet')}
+                      {isPlacingBet ? t('processing') : t('place_bet')}
                     </button>
 
                     {lastBet && (
@@ -178,9 +178,9 @@ const Casino: React.FC = () => {
               </div>
 
               <div className="bg-[#18181b] rounded-xl p-6 border border-[#2d2d30]">
-                <h3 className="font-bold mb-2">Responsible Gaming</h3>
+                <h3 className="font-bold mb-2">{t('responsible_gaming')}</h3>
                 <p className="text-xs text-gray-400">
-                  Please gamble responsibly. Betting is for entertainment purposes only. Users must be 18+ to participate in real-money simulations.
+                  {t('responsible_gaming_desc')}
                 </p>
               </div>
             </div>
