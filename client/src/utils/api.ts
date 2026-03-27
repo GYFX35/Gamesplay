@@ -57,6 +57,16 @@ export const getSportsStreams = async () => {
   return response.data;
 };
 
+export const getCoupons = async () => {
+  const response = await axios.get(`${API_URL}/coupons`);
+  return response.data;
+};
+
+export const getPredictions = async () => {
+  const response = await axios.get(`${API_URL}/predictions`);
+  return response.data;
+};
+
 export const createOrder = async (orderData: { userId: string, productId: string, quantity: number }) => {
   const response = await axios.post(`${API_URL}/orders`, orderData);
   return response.data;

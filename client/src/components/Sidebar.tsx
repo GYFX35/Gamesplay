@@ -80,6 +80,14 @@ const Sidebar: React.FC = () => {
               <span className="text-sm font-semibold hidden md:block">Challenges</span>
             </Link>
             <Link
+              to="/predictions"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/predictions') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title="Predictions"
+            >
+              <TrendingUp size={20} className="text-[#a970ff]" />
+              <span className="text-sm font-semibold hidden md:block">Predictions</span>
+            </Link>
+            <Link
               to="/monetization"
               className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/monetization') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
               title={t('monetization')}
