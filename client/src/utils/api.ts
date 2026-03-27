@@ -86,3 +86,13 @@ export const getStreamerAnalytics = async (streamerId: string) => {
   const response = await axios.get(`${API_URL}/monetization/analytics/${streamerId}`);
   return response.data;
 };
+
+export const getCasinoGames = async () => {
+  const response = await axios.get(`${API_URL}/casino/games`);
+  return response.data;
+};
+
+export const placeBet = async (betData: { userId: string, gameId: string, amount: number }) => {
+  const response = await axios.post(`${API_URL}/casino/bet`, betData);
+  return response.data;
+};

@@ -12,6 +12,7 @@ import Monetization from './pages/Monetization';
 import Forums from './pages/Forums';
 import Challenges from './pages/Challenges';
 import Predictions from './pages/Predictions';
+import Casino from './pages/Casino';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/forums" element={<Forums />} />
         <Route path="/challenges" element={<Challenges />} />
         <Route path="/predictions" element={<Predictions />} />
+        <Route path="/casino" element={<Casino />} />
       </Routes>
     </Router>
   );
