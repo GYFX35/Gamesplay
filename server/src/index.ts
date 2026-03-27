@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction } from '../../shared';
 
 dotenv.config();
 
@@ -99,6 +99,18 @@ const sportsStreams: SportsStream[] = [
   { id: 'ss1', title: 'Main Event: Heavyweight Showdown', league: 'Gamesplay MMA', homeTeam: 'Striker King', awayTeam: 'Grapple Master', viewerCount: 50000, thumbnail: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=400&h=225&fit=crop', isLive: true },
   { id: 'ss2', title: 'Regional Qualifiers: European Division', league: 'Cyber Football League', homeTeam: 'London Sparks', awayTeam: 'Paris Titans', viewerCount: 15000, thumbnail: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=225&fit=crop', isLive: true },
   { id: 'ss3', title: 'Ultimate Tennis Masters: Quarterfinals', league: 'Pro Tennis Virtual', homeTeam: 'Ace Venturer', awayTeam: 'Racket Rocket', viewerCount: 8000, thumbnail: 'https://images.unsplash.com/photo-1595435064212-c481782144f4?w=400&h=225&fit=crop', isLive: false },
+];
+
+const coupons: Coupon[] = [
+  { id: 'c1', code: 'GP50', description: '50% off on all games', discountValue: 50, discountType: 'percentage', expiryDate: '2025-12-31' },
+  { id: 'c2', code: 'MMA25', description: '$25 off on MMA gear', discountValue: 25, discountType: 'fixed', minPurchase: 100, expiryDate: '2025-06-30' },
+  { id: 'c3', code: 'WELCOME', description: 'Special welcome discount', discountValue: 10, discountType: 'percentage', expiryDate: '2026-01-01' },
+];
+
+const predictions: Prediction[] = [
+  { id: 'p1', matchTitle: 'Striker King vs Grapple Master', league: 'Gamesplay MMA', prediction: 'Striker King to win by KO', odds: 1.85, confidence: 85, status: 'pending', startTime: new Date().toISOString() },
+  { id: 'p2', matchTitle: 'London Sparks vs Paris Titans', league: 'Cyber Football League', prediction: 'Over 2.5 goals', odds: 2.10, confidence: 72, status: 'pending', startTime: new Date().toISOString() },
+  { id: 'p3', matchTitle: 'Ace Venturer vs Racket Rocket', league: 'Pro Tennis Virtual', prediction: 'Ace Venturer to win 2-0', odds: 1.65, confidence: 90, status: 'pending', startTime: new Date().toISOString() },
 ];
 
 // API Endpoints
@@ -192,6 +204,14 @@ app.get('/api/sports/news', (req, res) => {
 
 app.get('/api/sports/streams', (req, res) => {
   res.json(sportsStreams);
+});
+
+app.get('/api/coupons', (req, res) => {
+  res.json(coupons);
+});
+
+app.get('/api/predictions', (req, res) => {
+  res.json(predictions);
 });
 
 app.post('/api/orders', (req, res) => {

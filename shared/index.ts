@@ -156,3 +156,24 @@ export interface StreamerAnalytics {
   recentDonations: Donation[];
   revenueByMonth: { month: string, amount: number }[];
 }
+
+export interface Coupon {
+  id: string;
+  code: string;
+  description: string;
+  discountValue: number;
+  discountType: 'percentage' | 'fixed';
+  minPurchase?: number;
+  expiryDate: string;
+}
+
+export interface Prediction {
+  id: string;
+  matchTitle: string;
+  league: string;
+  prediction: string;
+  odds: number;
+  confidence: number;
+  status: 'pending' | 'won' | 'lost';
+  startTime: string;
+}
