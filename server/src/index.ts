@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, CasinoGame, Bet } from '../../shared';
 
 dotenv.config();
 
@@ -88,6 +88,15 @@ const products: Product[] = [
 const orders: Order[] = [];
 const subscriptions: Subscription[] = [];
 const donations: Donation[] = [];
+
+const casinoGames: CasinoGame[] = [
+  { id: 'cg1', title: 'Royal Slots 777', thumbnail: 'https://images.unsplash.com/photo-1596838132731-160162739563?w=400&h=300&fit=crop', category: 'Slots', gameUrl: 'https://www.google.com/search?q=slots+game+preview' },
+  { id: 'cg2', title: 'Cyber Poker Masters', thumbnail: 'https://images.unsplash.com/photo-1511193311914-0346f16fea90?w=400&h=300&fit=crop', category: 'Poker', gameUrl: 'https://www.google.com/search?q=poker+game+preview' },
+  { id: 'cg3', title: 'Neon Blackjack', thumbnail: 'https://images.unsplash.com/photo-1518893063132-36e46dbe2498?w=400&h=300&fit=crop', category: 'Table Games', gameUrl: 'https://www.google.com/search?q=blackjack+game+preview' },
+  { id: 'cg4', title: 'Crypto Dice Roll', thumbnail: 'https://images.unsplash.com/photo-1511193311914-0346f16fea90?w=400&h=300&fit=crop', category: 'Dice', gameUrl: 'https://www.google.com/search?q=dice+game+preview' },
+];
+
+const bets: Bet[] = [];
 
 const sportsNews: SportsNews[] = [
   { id: 'sn1', title: 'Global MMA Championship 2024: The Road to the Title', summary: 'Everything you need to know about the upcoming MMA championship.', content: 'The MMA world is buzzing with excitement as the Global Championship approaches. This year, we expect to see unprecedented talent and thrilling matches.', thumbnail: 'https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=800&h=450&fit=crop', category: 'MMA', publishedAt: new Date().toISOString() },
@@ -296,6 +305,40 @@ app.get('/api/monetization/analytics/:streamerId', (req, res) => {
     ]
   };
   res.json(analytics);
+});
+
+app.get('/api/casino/games', (req, res) => {
+  res.json(casinoGames);
+});
+
+app.post('/api/casino/bet', (req, res) => {
+  const { userId, gameId, amount } = req.body;
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ message: 'Bet amount must be positive' });
+  }
+
+  const game = casinoGames.find(g => g.id === gameId);
+  if (!game) {
+    return res.status(404).json({ message: 'Game not found' });
+  }
+
+  // Simple random outcome logic
+  const win = Math.random() > 0.6;
+  const multiplier = win ? (1.5 + Math.random() * 2) : 0;
+
+  const newBet: Bet = {
+    id: `bet${bets.length + 1}`,
+    userId,
+    gameId,
+    amount,
+    outcome: win ? 'win' : 'loss',
+    multiplier,
+    timestamp: new Date().toISOString()
+  };
+
+  bets.push(newBet);
+  res.status(201).json(newBet);
 });
 
 // Socket.io for Real-time features

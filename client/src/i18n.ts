@@ -43,7 +43,14 @@ const resources = {
       "research_lab": "Research Lab",
       "ai_training": "AI Training",
       "player_metrics": "Player Metrics",
-      "experimentation": "Experimentation"
+      "experimentation": "Experimentation",
+      "casino": "Casino",
+      "bet": "Bet",
+      "place_bet": "Place Bet",
+      "bet_amount": "Bet Amount",
+      "win": "Win",
+      "loss": "Loss",
+      "play_now": "Play Now"
     }
   },
   es: {
@@ -86,7 +93,14 @@ const resources = {
       "research_lab": "Laboratorio de Investigación",
       "ai_training": "Entrenamiento de IA",
       "player_metrics": "Métricas de Jugador",
-      "experimentation": "Experimentación"
+      "experimentation": "Experimentación",
+      "casino": "Casino",
+      "bet": "Apostar",
+      "place_bet": "Realizar Apuesta",
+      "bet_amount": "Monto de la Apuesta",
+      "win": "Ganar",
+      "loss": "Perder",
+      "play_now": "Jugar Ahora"
     }
   },
   jp: {
@@ -129,7 +143,14 @@ const resources = {
       "research_lab": "研究ラボ",
       "ai_training": "AIトレーニング",
       "player_metrics": "プレイヤー指標",
-      "experimentation": "実験"
+      "experimentation": "実験",
+      "casino": "カジノ",
+      "bet": "ベット",
+      "place_bet": "ベットする",
+      "bet_amount": "ベット額",
+      "win": "勝ち",
+      "loss": "負け",
+      "play_now": "今すぐプレイ"
     }
   }
 };

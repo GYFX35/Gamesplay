@@ -11,6 +11,7 @@ import Sports from './pages/Sports';
 import Monetization from './pages/Monetization';
 import Forums from './pages/Forums';
 import Challenges from './pages/Challenges';
+import Casino from './pages/Casino';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/monetization" element={<Monetization />} />
         <Route path="/forums" element={<Forums />} />
         <Route path="/challenges" element={<Challenges />} />
+        <Route path="/casino" element={<Casino />} />
       </Routes>
     </Router>
   );
