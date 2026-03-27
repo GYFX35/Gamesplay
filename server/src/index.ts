@@ -2,19 +2,36 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { TencentService } from './services/tencentService';
 import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction, CasinoGame, Bet } from '../../shared';
 
 dotenv.config();
 
 const app = express();
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "img-src": ["'self'", "data:", "https://images.unsplash.com"],
+      "frame-src": ["'self'", "https://www.google.com"], // Allow iframes for game previews
+    },
+  },
+}));
 app.use(cors());
 app.use(express.json());
+
+const betLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 bets per window
+  message: 'Too many bets from this IP, please try again after 15 minutes'
+});
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -112,6 +129,15 @@ const predictions: Prediction[] = [
   { id: 'p2', matchTitle: 'London Sparks vs Paris Titans', league: 'Cyber Football League', prediction: 'Over 2.5 goals', odds: 2.10, confidence: 72, status: 'pending', startTime: new Date().toISOString() },
   { id: 'p3', matchTitle: 'Ace Venturer vs Racket Rocket', league: 'Pro Tennis Virtual', prediction: 'Ace Venturer to win 2-0', odds: 1.65, confidence: 90, status: 'pending', startTime: new Date().toISOString() },
 ];
+
+const casinoGames: CasinoGame[] = [
+  { id: 'cg1', title: 'Royal Slots 777', thumbnail: 'https://images.unsplash.com/photo-1596838132731-160162739563?w=400&h=300&fit=crop', category: 'Slots', gameUrl: 'https://www.google.com/search?q=slots+game+preview' },
+  { id: 'cg2', title: 'Cyber Poker Masters', thumbnail: 'https://images.unsplash.com/photo-1511193311914-0346f16fea90?w=400&h=300&fit=crop', category: 'Poker', gameUrl: 'https://www.google.com/search?q=poker+game+preview' },
+  { id: 'cg3', title: 'Neon Blackjack', thumbnail: 'https://images.unsplash.com/photo-1518893063132-36e46dbe2498?w=400&h=300&fit=crop', category: 'Table Games', gameUrl: 'https://www.google.com/search?q=blackjack+game+preview' },
+  { id: 'cg4', title: 'Crypto Dice Roll', thumbnail: 'https://images.unsplash.com/photo-1511193311914-0346f16fea90?w=400&h=300&fit=crop', category: 'Dice', gameUrl: 'https://www.google.com/search?q=dice+game+preview' },
+];
+
+const bets: Bet[] = [];
 
 // API Endpoints
 app.get('/api/games', async (req, res) => {
@@ -212,6 +238,40 @@ app.get('/api/coupons', (req, res) => {
 
 app.get('/api/predictions', (req, res) => {
   res.json(predictions);
+});
+
+app.get('/api/casino/games', (req, res) => {
+  res.json(casinoGames);
+});
+
+app.post('/api/casino/bet', betLimiter, (req, res) => {
+  const { userId, gameId, amount } = req.body;
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ message: 'Bet amount must be positive' });
+  }
+
+  const game = casinoGames.find(g => g.id === gameId);
+  if (!game) {
+    return res.status(404).json({ message: 'Game not found' });
+  }
+
+  // Simple random outcome logic
+  const win = Math.random() > 0.6;
+  const multiplier = win ? (1.5 + Math.random() * 2) : 0;
+
+  const newBet: Bet = {
+    id: `bet${bets.length + 1}`,
+    userId,
+    gameId,
+    amount,
+    outcome: win ? 'win' : 'loss',
+    multiplier,
+    timestamp: new Date().toISOString()
+  };
+
+  bets.push(newBet);
+  res.status(201).json(newBet);
 });
 
 app.post('/api/orders', (req, res) => {

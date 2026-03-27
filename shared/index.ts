@@ -177,3 +177,21 @@ export interface Prediction {
   status: 'pending' | 'won' | 'lost';
   startTime: string;
 }
+
+export interface CasinoGame {
+  id: string;
+  title: string;
+  thumbnail: string;
+  category: 'Slots' | 'Table Games' | 'Poker' | 'Dice';
+  gameUrl: string;
+}
+
+export interface Bet {
+  id: string;
+  userId: string;
+  gameId: string;
+  amount: number;
+  outcome?: 'win' | 'loss' | 'pending';
+  multiplier?: number;
+  timestamp: string;
+}
