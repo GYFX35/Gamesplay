@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import helmet from 'helmet';
+import helmet, { contentSecurityPolicy } from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { TencentService } from './services/tencentService';
@@ -15,15 +15,20 @@ import { Product, Order, SportsNews, SportsStream, Subscription, Donation, Strea
 dotenv.config();
 
 const app = express();
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "img-src": ["'self'", "data:", "https://images.unsplash.com"],
-      "frame-src": ["'self'", "https://www.google.com"], // Allow iframes for game previews
-    },
+
+// Centralized CSP origins
+const ALLOWED_IMG_ORIGINS = ["'self'", "data:", "https://images.unsplash.com"];
+const ALLOWED_FRAME_ORIGINS = ["'self'", "https://www.google.com"];
+
+app.use(helmet());
+app.use(contentSecurityPolicy({
+  directives: {
+    ...contentSecurityPolicy.getDefaultDirectives(),
+    "img-src": ALLOWED_IMG_ORIGINS,
+    "frame-src": ALLOWED_FRAME_ORIGINS, // Allow iframes for game previews
   },
 }));
+
 app.use(cors());
 app.use(express.json());
 
@@ -245,10 +250,18 @@ app.get('/api/casino/games', (req, res) => {
 });
 
 app.post('/api/casino/bet', betLimiter, (req, res) => {
-  const { userId, gameId, amount } = req.body;
+  const { gameId, amount } = req.body;
+  // In a real app, userId should be retrieved from auth/session
+  // const userId = req.user.id;
+  const userId = req.body.userId || 'u1';
 
-  if (!amount || amount <= 0) {
-    return res.status(400).json({ message: 'Bet amount must be positive' });
+  if (typeof amount !== 'number' || isNaN(amount) || amount <= 0) {
+    return res.status(400).json({ message: 'Bet amount must be a positive number' });
+  }
+
+  const MAX_BET = 10000;
+  if (amount > MAX_BET) {
+    return res.status(400).json({ message: `Bet amount exceeds maximum limit of $${MAX_BET}` });
   }
 
   const game = casinoGames.find(g => g.id === gameId);

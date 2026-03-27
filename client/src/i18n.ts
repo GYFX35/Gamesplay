@@ -49,7 +49,14 @@ const resources = {
       "bet_amount": "Bet Amount",
       "play_now": "Play Now",
       "win": "Win",
-      "loss": "Loss"
+      "loss": "Loss",
+      "casino_tagline": "Play your favorite HTML5 casino games and place bets globally.",
+      "open_new_tab": "Open in New Tab",
+      "html5_integrated": "HTML5 Integrated",
+      "select_game_to_bet": "Select a game to start betting",
+      "responsible_gaming": "Responsible Gaming",
+      "responsible_gaming_desc": "Please gamble responsibly. Betting is for entertainment purposes only. Users must be 18+ to participate in real-money simulations.",
+      "processing": "Processing..."
     }
   },
   es: {
@@ -98,7 +105,14 @@ const resources = {
       "bet_amount": "Monto de la Apuesta",
       "play_now": "Jugar Ahora",
       "win": "Ganaste",
-      "loss": "Perdiste"
+      "loss": "Perdiste",
+      "casino_tagline": "Juega a tus juegos de casino HTML5 favoritos y realiza apuestas a nivel mundial.",
+      "open_new_tab": "Abrir en pestaña nueva",
+      "html5_integrated": "HTML5 Integrado",
+      "select_game_to_bet": "Selecciona un juego para empezar a apostar",
+      "responsible_gaming": "Juego Responsable",
+      "responsible_gaming_desc": "Por favor, juegue de forma responsable. Las apuestas son solo para fines de entretenimiento. Los usuarios deben ser mayores de 18 años para participar en simulaciones de dinero real.",
+      "processing": "Procesando..."
     }
   },
   jp: {
@@ -147,7 +161,14 @@ const resources = {
       "bet_amount": "ベット額",
       "play_now": "今すぐプレイ",
       "win": "勝利",
-      "loss": "敗北"
+      "loss": "敗北",
+      "casino_tagline": "お気に入りのHTML5カジノゲームをプレイして、世界中でベットしましょう。",
+      "open_new_tab": "新しいタブで開く",
+      "html5_integrated": "HTML5統合済み",
+      "select_game_to_bet": "ゲームを選択してベットを開始します",
+      "responsible_gaming": "責任あるゲーミング",
+      "responsible_gaming_desc": "責任を持ってプレイしてください。ベットは娯楽目的のみです。リアルマネーシミュレーションに参加するには18歳以上である必要があります。",
+      "processing": "処理中..."
     }
   }
 };
