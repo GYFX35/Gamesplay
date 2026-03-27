@@ -9,6 +9,8 @@ import Entertainment from './pages/Entertainment';
 import Shop from './pages/Shop';
 import Sports from './pages/Sports';
 import Monetization from './pages/Monetization';
+import Forums from './pages/Forums';
+import Challenges from './pages/Challenges';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/sports" element={<Sports />} />
         <Route path="/monetization" element={<Monetization />} />
+        <Route path="/forums" element={<Forums />} />
+        <Route path="/challenges" element={<Challenges />} />
       </Routes>
     </Router>
   );

@@ -8,7 +8,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject } from '../../shared';
+import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack } from '../../shared';
 
 dotenv.config();
 
@@ -71,6 +71,12 @@ const musicTracks = [
   { id: 'm1', title: 'Cybernetic Pulse', artist: 'Neon Voyager', album: 'Synth Horizons', duration: '3:45', thumbnail: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   { id: 'm2', title: 'Digital Dreams', artist: 'Ether Echo', album: 'Virtual Reality', duration: '4:12', thumbnail: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
   { id: 'm3', title: 'Pixel Journey', artist: 'Bit Crusher', album: '8-Bit Adventures', duration: '2:58', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop', audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+];
+
+const videoTracks: VideoTrack[] = [
+  { id: 'v1', title: 'Epic MMA Highlights 2024', creator: 'GrappleMaster', duration: '5:20', thumbnail: 'https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=640&h=360&fit=crop', videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4', views: 12500 },
+  { id: 'v2', title: 'Cyber Racer: Neon Drift Tutorial', creator: 'NeonVoyager', duration: '8:45', thumbnail: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=640&h=360&fit=crop', videoUrl: 'https://www.w3schools.com/html/movie.mp4', views: 8500 },
+  { id: 'v3', title: '3D Sandbox World: Build Your First Arena', creator: 'Gamesplay Dev', duration: '12:15', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=640&h=360&fit=crop', videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4', views: 4200 },
 ];
 
 const products: Product[] = [
@@ -170,6 +176,10 @@ app.get('/api/projects/:id/research', (req, res) => {
 
 app.get('/api/music', (req, res) => {
   res.json(musicTracks);
+});
+
+app.get('/api/videos', (req, res) => {
+  res.json(videoTracks);
 });
 
 app.get('/api/products', (req, res) => {

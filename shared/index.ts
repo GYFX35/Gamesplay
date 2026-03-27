@@ -81,6 +81,16 @@ export interface MusicTrack {
   audioUrl: string;
 }
 
+export interface VideoTrack {
+  id: string;
+  title: string;
+  creator: string;
+  duration: string;
+  thumbnail: string;
+  videoUrl: string;
+  views: number;
+}
+
 export interface Product {
   id: string;
   name: string;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy, TrendingUp } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy, TrendingUp, MessageCircle, Target } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +62,22 @@ const Sidebar: React.FC = () => {
             >
               <Trophy size={20} />
               <span className="text-sm font-semibold hidden md:block">{t('sports')}</span>
+            </Link>
+            <Link
+              to="/forums"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/forums') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title="Forums"
+            >
+              <MessageCircle size={20} />
+              <span className="text-sm font-semibold hidden md:block">Forums</span>
+            </Link>
+            <Link
+              to="/challenges"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/challenges') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title="Challenges"
+            >
+              <Target size={20} className="text-[#a970ff]" />
+              <span className="text-sm font-semibold hidden md:block">Challenges</span>
             </Link>
             <Link
               to="/monetization"

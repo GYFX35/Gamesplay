@@ -37,6 +37,11 @@ export const getMusicTracks = async () => {
   return response.data;
 };
 
+export const getVideoTracks = async () => {
+  const response = await axios.get(`${API_URL}/videos`);
+  return response.data;
+};
+
 export const getProducts = async () => {
   const response = await axios.get(`${API_URL}/products`);
   return response.data;
