@@ -337,6 +337,26 @@ app.post('/api/ai/assist', (req, res) => {
   });
 });
 
+app.post('/api/ai/generate-content', (req, res) => {
+  const { prompt, contentType } = req.body;
+  // Simulated AI Generation Logic
+  let response = '';
+  switch (contentType) {
+    case 'description':
+      response = `Welcome to my latest stream of "${prompt}"! In this episode, we explore advanced mechanics and push the boundaries of what's possible in the 3D world. Don't forget to like and subscribe!`;
+      break;
+    case 'social-media':
+      response = `🚀 Going live now with ${prompt}! Join the Gamesplay community for some epic 3D action. #Gamesplay #Streaming #${prompt.replace(/\s+/g, '')}`;
+      break;
+    case 'title':
+      response = `Ultimate ${prompt} Mastery: Advanced Pro Tips & Tricks 2024`;
+      break;
+    default:
+      response = `Generated content for "${prompt}": Exploring the future of interactive 3D entertainment on Gamesplay.`;
+  }
+  res.json({ content: response });
+});
+
 app.post('/api/monetization/subscribe', (req, res) => {
   const { userId, streamerId, tier } = req.body;
   const newSub: Subscription = {

@@ -56,7 +56,14 @@ const resources = {
       "select_game_to_bet": "Select a game to start betting",
       "responsible_gaming": "Responsible Gaming",
       "responsible_gaming_desc": "Please gamble responsibly. Betting is for entertainment purposes only. Users must be 18+ to participate in real-money simulations.",
-      "processing": "Processing..."
+      "processing": "Processing...",
+      "ai_content_creator": "AI Content Creator",
+      "generate_content": "Generate Content",
+      "content_prompt": "What's your stream about?",
+      "content_type": "Content Type",
+      "stream_description": "Stream Description",
+      "social_post": "Social Media Post",
+      "stream_title": "Stream Title"
     }
   },
   es: {
@@ -112,7 +119,14 @@ const resources = {
       "select_game_to_bet": "Selecciona un juego para empezar a apostar",
       "responsible_gaming": "Juego Responsable",
       "responsible_gaming_desc": "Por favor, juegue de forma responsable. Las apuestas son solo para fines de entretenimiento. Los usuarios deben ser mayores de 18 años para participar en simulaciones de dinero real.",
-      "processing": "Procesando..."
+      "processing": "Procesando...",
+      "ai_content_creator": "Creador de Contenido IA",
+      "generate_content": "Generar Contenido",
+      "content_prompt": "¿De qué trata tu transmisión?",
+      "content_type": "Tipo de Contenido",
+      "stream_description": "Descripción de la Transmisión",
+      "social_post": "Publicación en Redes Sociales",
+      "stream_title": "Título de la Transmisión"
     }
   },
   jp: {
@@ -168,7 +182,14 @@ const resources = {
       "select_game_to_bet": "ゲームを選択してベットを開始します",
       "responsible_gaming": "責任あるゲーミング",
       "responsible_gaming_desc": "責任を持ってプレイしてください。ベットは娯楽目的のみです。リアルマネーシミュレーションに参加するには18歳以上である必要があります。",
-      "processing": "処理中..."
+      "processing": "処理中...",
+      "ai_content_creator": "AIコンテンツクリエイター",
+      "generate_content": "コンテンツを生成",
+      "content_prompt": "配信の内容は何ですか？",
+      "content_type": "コンテンツタイプ",
+      "stream_description": "配信の説明",
+      "social_post": "ソーシャルメディア投稿",
+      "stream_title": "配信タイトル"
     }
   }
 };

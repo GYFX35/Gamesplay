@@ -13,6 +13,7 @@ import Forums from './pages/Forums';
 import Challenges from './pages/Challenges';
 import Predictions from './pages/Predictions';
 import Casino from './pages/Casino';
+import AIContentCreator from './pages/AIContentCreator';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/challenges" element={<Challenges />} />
         <Route path="/predictions" element={<Predictions />} />
         <Route path="/casino" element={<Casino />} />
+        <Route path="/ai-creator" element={<AIContentCreator />} />
       </Routes>
     </Router>
   );
