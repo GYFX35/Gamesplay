@@ -23,16 +23,36 @@ const AIContentCreator: React.FC = () => {
       setGeneratedContent(data.content);
     } catch (error) {
       console.error('Error generating content:', error);
-      setGeneratedContent('Failed to generate content. Please try again.');
+      setGeneratedContent(t('ai_error'));
     } finally {
       setLoading(false);
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedContent);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copyToClipboard = async () => {
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(generatedContent);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
+    } else {
+      // Fallback for browsers that don't support navigator.clipboard
+      const textArea = document.createElement("textarea");
+      textArea.value = generatedContent;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
@@ -46,7 +66,7 @@ const AIContentCreator: React.FC = () => {
               <Sparkles className="text-[#a970ff]" />
               {t('ai_content_creator')}
             </h1>
-            <p className="text-gray-400">Generate high-quality descriptions, titles, and social posts for your streams.</p>
+            <p className="text-gray-400">{t('ai_creator_subtitle')}</p>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -88,7 +108,7 @@ const AIContentCreator: React.FC = () => {
                     id="prompt"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="e.g. Minecraft survival mode with friends, focusing on building a 3D castle."
+                    placeholder={t('ai_prompt_placeholder')}
                     className="w-full bg-[#0e0e10] border border-[#2d2d30] focus:border-[#a970ff] rounded-md p-4 outline-none transition-all h-32 resize-none text-sm"
                   />
                 </div>
@@ -107,7 +127,7 @@ const AIContentCreator: React.FC = () => {
             {/* Output Section */}
             <section className="bg-[#1f1f23] rounded-xl border border-[#2d2d30] shadow-lg flex flex-col overflow-hidden">
               <div className="p-4 border-b border-[#2d2d30] bg-[#18181b] flex items-center justify-between">
-                <span className="text-xs font-bold uppercase text-gray-400 tracking-widest">AI Result</span>
+                <span className="text-xs font-bold uppercase text-gray-400 tracking-widest">{t('ai_result')}</span>
                 {generatedContent && (
                   <button
                     onClick={copyToClipboard}
@@ -116,12 +136,12 @@ const AIContentCreator: React.FC = () => {
                     {copied ? (
                       <>
                         <Check size={14} className="text-green-500" />
-                        <span className="text-green-500">Copied!</span>
+                        <span className="text-green-500">{t('copied')}</span>
                       </>
                     ) : (
                       <>
                         <Copy size={14} />
-                        <span>Copy</span>
+                        <span>{t('copy')}</span>
                       </>
                     )}
                   </button>
@@ -131,7 +151,7 @@ const AIContentCreator: React.FC = () => {
                 {loading ? (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
                     <Loader2 className="animate-spin mb-4" size={48} />
-                    <p className="animate-pulse font-medium">Generating your content...</p>
+                    <p className="animate-pulse font-medium">{t('generating')}</p>
                   </div>
                 ) : generatedContent ? (
                   <div className="bg-[#0e0e10] p-6 rounded-lg border border-[#2d2d30] h-full overflow-y-auto">
@@ -140,7 +160,7 @@ const AIContentCreator: React.FC = () => {
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-500 text-center px-8">
                     <Sparkles size={48} className="mb-4 opacity-10" />
-                    <p>Enter a prompt and click generate to see AI magic happen.</p>
+                    <p>{t('ai_empty_state')}</p>
                   </div>
                 )}
               </div>
