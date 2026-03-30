@@ -22,7 +22,9 @@ export const getAIAssistance = async (prompt: string) => {
   return response.data;
 };
 
-export const generateAIContent = async (prompt: string, contentType: string) => {
+export type AIContentType = 'description' | 'social-media' | 'title';
+
+export const generateAIContent = async (prompt: string, contentType: AIContentType | string) => {
   const response = await axios.post(`${API_URL}/ai/generate-content`, { prompt, contentType });
   return response.data;
 };

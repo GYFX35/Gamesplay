@@ -339,20 +339,33 @@ app.post('/api/ai/assist', (req, res) => {
 
 app.post('/api/ai/generate-content', (req, res) => {
   const { prompt, contentType } = req.body;
+
+  if (!prompt || typeof prompt !== 'string') {
+    return res.status(400).json({ message: 'A valid prompt is required' });
+  }
+
+  const allowedContentTypes = ['description', 'social-media', 'title'];
+  if (!contentType || !allowedContentTypes.includes(contentType)) {
+    return res.status(400).json({ message: 'A valid contentType is required (description, social-media, or title)' });
+  }
+
+  // Sanitize and normalize prompt
+  const sanitizedPrompt = prompt.trim().replace(/[<>]/g, ''); // Basic sanitization
+
   // Simulated AI Generation Logic
   let response = '';
   switch (contentType) {
     case 'description':
-      response = `Welcome to my latest stream of "${prompt}"! In this episode, we explore advanced mechanics and push the boundaries of what's possible in the 3D world. Don't forget to like and subscribe!`;
+      response = `Welcome to my latest stream of "${sanitizedPrompt}"! In this episode, we explore advanced mechanics and push the boundaries of what's possible in the 3D world. Don't forget to like and subscribe!`;
       break;
     case 'social-media':
-      response = `🚀 Going live now with ${prompt}! Join the Gamesplay community for some epic 3D action. #Gamesplay #Streaming #${prompt.replace(/\s+/g, '')}`;
+      response = `🚀 Going live now with ${sanitizedPrompt}! Join the Gamesplay community for some epic 3D action. #Gamesplay #Streaming #${sanitizedPrompt.replace(/\s+/g, '')}`;
       break;
     case 'title':
-      response = `Ultimate ${prompt} Mastery: Advanced Pro Tips & Tricks 2024`;
+      response = `Ultimate ${sanitizedPrompt} Mastery: Advanced Pro Tips & Tricks 2024`;
       break;
     default:
-      response = `Generated content for "${prompt}": Exploring the future of interactive 3D entertainment on Gamesplay.`;
+      response = `Generated content for "${sanitizedPrompt}": Exploring the future of interactive 3D entertainment on Gamesplay.`;
   }
   res.json({ content: response });
 });

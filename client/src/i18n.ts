@@ -58,12 +58,20 @@ const resources = {
       "responsible_gaming_desc": "Please gamble responsibly. Betting is for entertainment purposes only. Users must be 18+ to participate in real-money simulations.",
       "processing": "Processing...",
       "ai_content_creator": "AI Content Creator",
+      "ai_creator_subtitle": "Generate high-quality descriptions, titles, and social posts for your streams.",
       "generate_content": "Generate Content",
       "content_prompt": "What's your stream about?",
+      "ai_prompt_placeholder": "e.g. Minecraft survival mode with friends, focusing on building a 3D castle.",
       "content_type": "Content Type",
       "stream_description": "Stream Description",
       "social_post": "Social Media Post",
-      "stream_title": "Stream Title"
+      "stream_title": "Stream Title",
+      "ai_result": "AI Result",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "generating": "Generating your content...",
+      "ai_empty_state": "Enter a prompt and click generate to see AI magic happen.",
+      "ai_error": "Failed to generate content. Please try again."
     }
   },
   es: {
@@ -121,12 +129,20 @@ const resources = {
       "responsible_gaming_desc": "Por favor, juegue de forma responsable. Las apuestas son solo para fines de entretenimiento. Los usuarios deben ser mayores de 18 años para participar en simulaciones de dinero real.",
       "processing": "Procesando...",
       "ai_content_creator": "Creador de Contenido IA",
+      "ai_creator_subtitle": "Genera descripciones, títulos y publicaciones en redes sociales de alta calidad para tus transmisiones.",
       "generate_content": "Generar Contenido",
       "content_prompt": "¿De qué trata tu transmisión?",
+      "ai_prompt_placeholder": "p. ej. Modo de supervivencia de Minecraft con amigos, centrándose en construir un castillo en 3D.",
       "content_type": "Tipo de Contenido",
       "stream_description": "Descripción de la Transmisión",
       "social_post": "Publicación en Redes Sociales",
-      "stream_title": "Título de la Transmisión"
+      "stream_title": "Título de la Transmisión",
+      "ai_result": "Resultado de IA",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "generating": "Generando tu contenido...",
+      "ai_empty_state": "Ingresa una indicación y haz clic en generar para ver la magia de la IA.",
+      "ai_error": "Error al generar contenido. Por favor, inténtalo de nuevo."
     }
   },
   jp: {
@@ -184,12 +200,20 @@ const resources = {
       "responsible_gaming_desc": "責任を持ってプレイしてください。ベットは娯楽目的のみです。リアルマネーシミュレーションに参加するには18歳以上である必要があります。",
       "processing": "処理中...",
       "ai_content_creator": "AIコンテンツクリエイター",
+      "ai_creator_subtitle": "配信のための高品質な説明、タイトル、ソーシャル投稿を生成します。",
       "generate_content": "コンテンツを生成",
       "content_prompt": "配信の内容は何ですか？",
+      "ai_prompt_placeholder": "例：友達とのMinecraftサバイバルモード、3Dの城の建設に焦点を当てる。",
       "content_type": "コンテンツタイプ",
       "stream_description": "配信の説明",
       "social_post": "ソーシャルメディア投稿",
-      "stream_title": "配信タイトル"
+      "stream_title": "配信タイトル",
+      "ai_result": "AIの結果",
+      "copy": "コピー",
+      "copied": "コピーしました！",
+      "generating": "コンテンツを生成中...",
+      "ai_empty_state": "プロンプトを入力して「生成」をクリックすると、AIの魔法が表示されます。",
+      "ai_error": "コンテンツの生成に失敗しました。もう一度お試しください。"
     }
   }
 };
