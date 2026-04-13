@@ -14,6 +14,7 @@ import Challenges from './pages/Challenges';
 import Predictions from './pages/Predictions';
 import Casino from './pages/Casino';
 import AIContentCreator from './pages/AIContentCreator';
+import Games from './pages/Games';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/stream/:id" element={<StreamView />} />
         <Route path="/browse" element={<Home />} />
+        <Route path="/games" element={<Games />} />
         <Route path="/create" element={<GameCreator />} />
         <Route path="/extension" element={<Extension />} />
         <Route path="/setup-dns" element={<DNSSetup />} />

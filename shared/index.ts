@@ -11,6 +11,8 @@ export interface Game {
   description: string;
   genre: string;
   developer: string;
+  category: 'Action' | 'Casual' | 'Children' | 'Instant' | 'E-sports' | 'Video Games';
+  url?: string;
 }
 
 export interface Stream {

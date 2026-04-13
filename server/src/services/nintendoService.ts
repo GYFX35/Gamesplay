@@ -9,7 +9,7 @@ export class NintendoService {
       thumbnail: 'https://example.com/zelda.jpg',
       description: 'Explore the vast kingdom of Hyrule.',
       genre: 'Action-Adventure',
-      developer: 'Nintendo EPD'
+      developer: 'Nintendo EPD', category: 'Video Games'
     },
     {
       id: 'n2',
@@ -17,7 +17,7 @@ export class NintendoService {
       thumbnail: 'https://example.com/mario.jpg',
       description: 'A globetrotting 3D Mario adventure.',
       genre: 'Platformer',
-      developer: 'Nintendo EPD'
+      developer: 'Nintendo EPD', category: 'Video Games'
     }
   ];
 
@@ -50,7 +50,7 @@ export class NintendoService {
       thumbnail: data.image_url || 'https://example.com/default-game.jpg',
       description: data.summary || '',
       genre: data.genres?.[0] || 'Unknown',
-      developer: 'Nintendo'
+      developer: 'Nintendo', category: 'Video Games'
     };
   }
 }

@@ -8,7 +8,8 @@ export class TencentService {
       thumbnail: 'https://example.com/honor-of-kings.jpg',
       description: 'The worlds most played mobile MOBA.',
       genre: 'MOBA',
-      developer: 'TiMi Studio Group'
+      developer: 'TiMi Studio Group',
+      category: 'Video Games'
     },
     {
       id: 't2',
@@ -16,7 +17,8 @@ export class TencentService {
       thumbnail: 'https://example.com/pubg-mobile.jpg',
       description: 'The original battle royale, now on mobile.',
       genre: 'Battle Royale',
-      developer: 'Lightspeed & Quantum Studios'
+      developer: 'Lightspeed & Quantum Studios',
+      category: 'Video Games'
     }
   ];
 

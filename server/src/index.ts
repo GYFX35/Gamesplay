@@ -10,7 +10,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction, CasinoGame, Bet } from '../../shared';
+import { Game, Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction, CasinoGame, Bet } from '../../shared';
 
 dotenv.config();
 
@@ -47,10 +47,15 @@ const io = new Server(httpServer, {
 });
 
 // Mock Data
-const games = [
-  { id: '1', title: '3D Sandbox World', genre: 'Adventure', developer: 'Gamesplay Studios' },
-  { id: '2', title: 'Cyber Racer', genre: 'Racing', developer: 'Neon Games' },
-  { id: '3', title: 'Space Explorer', genre: 'Simulation', developer: 'Galactic Arts' },
+const games: Game[] = [
+  { id: '1', title: '3D Sandbox World', description: 'A vast open world to explore and build.', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=225&fit=crop', genre: 'Adventure', developer: 'Gamesplay Studios', category: 'Video Games' },
+  { id: '2', title: 'Cyber Racer', description: 'High-speed racing in a neon city.', thumbnail: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=400&h=225&fit=crop', genre: 'Racing', developer: 'Neon Games', category: 'Video Games' },
+  { id: '3', title: 'Space Explorer', description: 'Journey through the stars and discover new planets.', thumbnail: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=225&fit=crop', genre: 'Simulation', developer: 'Galactic Arts', category: 'Video Games' },
+  { id: '4', title: 'Street Brawler', description: 'Fast-paced urban combat.', thumbnail: 'https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=400&h=225&fit=crop', genre: 'Fighting', developer: 'Combat Co.', category: 'Action' },
+  { id: '5', title: 'Bubble Pop', description: 'Fun and relaxing bubble shooter.', thumbnail: 'https://images.unsplash.com/photo-1518893063132-36e46dbe2498?w=400&h=225&fit=crop', genre: 'Puzzle', developer: 'Casual Play', category: 'Casual' },
+  { id: '6', title: 'Color Match', description: 'Educational game for kids to learn colors.', thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=225&fit=crop', genre: 'Educational', developer: 'Kids Fun', category: 'Children' },
+  { id: '7', title: 'Quick Chess', description: 'Fast-paced chess variations.', thumbnail: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400&h=225&fit=crop', genre: 'Strategy', developer: 'Instant Games', category: 'Instant' },
+  { id: '8', title: 'Pro League Shooter', description: 'Competitive tactical shooter.', thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=225&fit=crop', genre: 'Shooter', developer: 'Esports Masters', category: 'E-sports' },
 ];
 
 const streams = [
@@ -157,13 +162,35 @@ app.get('/api/games', async (req, res) => {
 
     const externalGames = results
       .filter((result): result is PromiseFulfilledResult<any[]> => result.status === 'fulfilled')
-      .flatMap(result => result.value);
+      .flatMap(result => result.value.map(g => ({ ...g, category: g.category || 'Video Games' })));
 
     res.json([...games, ...externalGames]);
   } catch (error) {
     console.error('Error fetching games:', error);
     res.json(games); // Fallback to local mock games
   }
+});
+
+app.post('/api/games', (req, res) => {
+  const { title, description, genre, developer, category, thumbnail, url } = req.body;
+
+  if (!title || !category) {
+    return res.status(400).json({ message: 'Title and category are required' });
+  }
+
+  const newGame: Game = {
+    id: `g${games.length + 1}`,
+    title,
+    description: description || '',
+    genre: genre || 'General',
+    developer: developer || 'Community Member',
+    category,
+    thumbnail: thumbnail || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=225&fit=crop',
+    url
+  };
+
+  games.push(newGame);
+  res.status(201).json(newGame);
 });
 
 app.get('/api/external/tencent', async (req, res) => {

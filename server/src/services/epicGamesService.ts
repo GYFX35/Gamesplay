@@ -11,7 +11,8 @@ export class EpicGamesService {
       thumbnail: 'https://example.com/fortnite.jpg',
       description: 'The ultimate battle royale experience.',
       genre: 'Battle Royale',
-      developer: 'Epic Games'
+      developer: 'Epic Games',
+      category: 'Video Games'
     },
     {
       id: 'e2',
@@ -19,7 +20,8 @@ export class EpicGamesService {
       thumbnail: 'https://example.com/rocket-league.jpg',
       description: 'High-powered hybrid of arcade-style soccer and vehicular mayhem.',
       genre: 'Sports',
-      developer: 'Psyonix'
+      developer: 'Psyonix',
+      category: 'Video Games'
     }
   ];
 
@@ -54,7 +56,8 @@ export class EpicGamesService {
       thumbnail: data.keyImages?.[0]?.url || 'https://example.com/default-game.jpg',
       description: data.description || '',
       genre: data.categories?.[0]?.name || 'Unknown',
-      developer: data.seller?.name || 'Unknown'
+      developer: data.seller?.name || 'Unknown',
+      category: 'Video Games'
     };
   }
 }

@@ -12,7 +12,7 @@ export class TwitchService {
       thumbnail: 'https://example.com/just-chatting.jpg',
       description: 'The most popular category on Twitch.',
       genre: 'IRL',
-      developer: 'Twitch'
+      developer: 'Twitch', category: 'Video Games'
     },
     {
       id: 'tw2',
@@ -20,7 +20,7 @@ export class TwitchService {
       thumbnail: 'https://example.com/lol.jpg',
       description: 'A team-based strategy game where two teams of five powerful champions face off.',
       genre: 'MOBA',
-      developer: 'Riot Games'
+      developer: 'Riot Games', category: 'Video Games'
     }
   ];
 
@@ -70,7 +70,7 @@ export class TwitchService {
       thumbnail: data.box_art_url ? data.box_art_url.replace('{width}', '300').replace('{height}', '400') : 'https://example.com/default-game.jpg',
       description: `Top game on Twitch: ${data.name}`,
       genre: 'Gaming',
-      developer: 'Multiple'
+      developer: 'Multiple', category: 'Video Games'
     };
   }
 }

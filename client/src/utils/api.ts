@@ -7,6 +7,11 @@ export const getGames = async () => {
   return response.data;
 };
 
+export const submitGame = async (gameData: any) => {
+  const response = await axios.post(`${API_URL}/games`, gameData);
+  return response.data;
+};
+
 export const getStreams = async () => {
   const response = await axios.get(`${API_URL}/streams`);
   return response.data;
