@@ -11,6 +11,7 @@ export interface Game {
   description: string;
   genre: string;
   developer: string;
+  playUrl?: string;
 }
 
 export interface Stream {

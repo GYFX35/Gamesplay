@@ -8,18 +8,20 @@ export class EpicGamesService {
     {
       id: 'e1',
       title: 'Fortnite',
-      thumbnail: 'https://example.com/fortnite.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'The ultimate battle royale experience.',
       genre: 'Battle Royale',
-      developer: 'Epic Games'
+      developer: 'Epic Games',
+      playUrl: 'https://www.epicgames.com/fortnite/en-US/play-now'
     },
     {
       id: 'e2',
       title: 'Rocket League',
-      thumbnail: 'https://example.com/rocket-league.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
       description: 'High-powered hybrid of arcade-style soccer and vehicular mayhem.',
       genre: 'Sports',
-      developer: 'Psyonix'
+      developer: 'Psyonix',
+      playUrl: 'https://www.rocketleague.com/play-now'
     }
   ];
 

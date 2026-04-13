@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy, TrendingUp, MessageCircle, Target, Dices, Sparkles } from 'lucide-react';
+import { Chrome, Globe, Home, Compass, Link2, Cpu, Music, ShoppingCart, Trophy, TrendingUp, MessageCircle, Target, Dices, Sparkles, Gamepad2 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -30,6 +30,14 @@ const Sidebar: React.FC = () => {
             >
               <Compass size={20} />
               <span className="text-sm font-semibold hidden md:block">{t('browse')}</span>
+            </Link>
+            <Link
+              to="/games"
+              className={`flex items-center space-x-3 p-2 rounded-md transition-colors ${isActive('/games') ? 'bg-[#a970ff]/10 text-[#a970ff]' : 'hover:bg-[#26262c]'}`}
+              title={t('games', { defaultValue: 'Games' })}
+            >
+              <Gamepad2 size={20} />
+              <span className="text-sm font-semibold hidden md:block">{t('games', { defaultValue: 'Games' })}</span>
             </Link>
             <Link
               to="/create"

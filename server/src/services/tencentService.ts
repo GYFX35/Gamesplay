@@ -5,18 +5,20 @@ export class TencentService {
     {
       id: 't1',
       title: 'Honor of Kings',
-      thumbnail: 'https://example.com/honor-of-kings.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'The worlds most played mobile MOBA.',
       genre: 'MOBA',
-      developer: 'TiMi Studio Group'
+      developer: 'TiMi Studio Group',
+      playUrl: 'https://www.honorofkings.com/'
     },
     {
       id: 't2',
       title: 'PUBG Mobile',
-      thumbnail: 'https://example.com/pubg-mobile.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'The original battle royale, now on mobile.',
       genre: 'Battle Royale',
-      developer: 'Lightspeed & Quantum Studios'
+      developer: 'Lightspeed & Quantum Studios',
+      playUrl: 'https://www.pubgmobile.com/'
     }
   ];
 

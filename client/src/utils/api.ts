@@ -7,6 +7,11 @@ export const getGames = async () => {
   return response.data;
 };
 
+export const getGameById = async (id: string) => {
+  const response = await axios.get(`${API_URL}/games/${id}`);
+  return response.data;
+};
+
 export const getStreams = async () => {
   const response = await axios.get(`${API_URL}/streams`);
   return response.data;

@@ -9,18 +9,20 @@ export class TwitchService {
     {
       id: 'tw1',
       title: 'Just Chatting',
-      thumbnail: 'https://example.com/just-chatting.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'The most popular category on Twitch.',
       genre: 'IRL',
-      developer: 'Twitch'
+      developer: 'Twitch',
+      playUrl: 'https://www.twitch.tv/directory/game/Just%20Chatting'
     },
     {
       id: 'tw2',
       title: 'League of Legends',
-      thumbnail: 'https://example.com/lol.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'A team-based strategy game where two teams of five powerful champions face off.',
       genre: 'MOBA',
-      developer: 'Riot Games'
+      developer: 'Riot Games',
+      playUrl: 'https://www.leagueoflegends.com/'
     }
   ];
 

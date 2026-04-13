@@ -10,7 +10,7 @@ import { NintendoService } from './services/nintendoService';
 import { MicrosoftService } from './services/microsoftService';
 import { EpicGamesService } from './services/epicGamesService';
 import { TwitchService } from './services/twitchService';
-import { Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction, CasinoGame, Bet } from '../../shared';
+import { Game, Product, Order, SportsNews, SportsStream, Subscription, Donation, StreamerAnalytics, ResearchData, GameProject, VideoTrack, Coupon, Prediction, CasinoGame, Bet } from '../../shared';
 
 dotenv.config();
 
@@ -47,10 +47,31 @@ const io = new Server(httpServer, {
 });
 
 // Mock Data
-const games = [
-  { id: '1', title: '3D Sandbox World', genre: 'Adventure', developer: 'Gamesplay Studios' },
-  { id: '2', title: 'Cyber Racer', genre: 'Racing', developer: 'Neon Games' },
-  { id: '3', title: 'Space Explorer', genre: 'Simulation', developer: 'Galactic Arts' },
+const games: Game[] = [
+  {
+    id: '1',
+    title: '3D Sandbox World',
+    genre: 'Adventure',
+    developer: 'Gamesplay Studios',
+    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80',
+    description: 'Build and explore your own 3D worlds in this ultimate sandbox experience.'
+  },
+  {
+    id: '2',
+    title: 'Cyber Racer',
+    genre: 'Racing',
+    developer: 'Neon Games',
+    thumbnail: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=800&q=80',
+    description: 'High-speed racing through neon-lit futuristic cities.'
+  },
+  {
+    id: '3',
+    title: 'Space Explorer',
+    genre: 'Simulation',
+    developer: 'Galactic Arts',
+    thumbnail: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800&q=80',
+    description: 'Journey through the cosmos and discover alien civilizations.'
+  },
 ];
 
 const streams = [
@@ -163,6 +184,35 @@ app.get('/api/games', async (req, res) => {
   } catch (error) {
     console.error('Error fetching games:', error);
     res.json(games); // Fallback to local mock games
+  }
+});
+
+app.get('/api/games/:id', async (req, res) => {
+  try {
+    const allGamesResults = await Promise.allSettled([
+      TencentService.getGames(),
+      NintendoService.getGames(),
+      MicrosoftService.getGames(),
+      EpicGamesService.getGames(),
+      TwitchService.getGames()
+    ]);
+
+    const allGames = [
+      ...games,
+      ...allGamesResults
+        .filter((result): result is PromiseFulfilledResult<any[]> => result.status === 'fulfilled')
+        .flatMap(result => result.value)
+    ];
+
+    const game = allGames.find(g => g.id === req.params.id);
+    if (game) {
+      res.json(game);
+    } else {
+      res.status(404).json({ message: 'Game not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching game:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
