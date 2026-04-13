@@ -8,7 +8,7 @@ export class MicrosoftService {
       thumbnail: 'https://example.com/halo.jpg',
       description: 'The Master Chief returns in an epic open-world adventure.',
       genre: 'First-Person Shooter',
-      developer: '343 Industries'
+      developer: '343 Industries', category: 'Video Games'
     },
     {
       id: 'm2',
@@ -16,7 +16,7 @@ export class MicrosoftService {
       thumbnail: 'https://example.com/forza.jpg',
       description: 'Your ultimate Horizon adventure awaits in Mexico.',
       genre: 'Racing',
-      developer: 'Playground Games'
+      developer: 'Playground Games', category: 'Video Games'
     }
   ];
 
