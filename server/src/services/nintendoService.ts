@@ -6,18 +6,20 @@ export class NintendoService {
     {
       id: 'n1',
       title: 'The Legend of Zelda: Breath of the Wild',
-      thumbnail: 'https://example.com/zelda.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'Explore the vast kingdom of Hyrule.',
       genre: 'Action-Adventure',
-      developer: 'Nintendo EPD'
+      developer: 'Nintendo EPD',
+      playUrl: 'https://www.nintendo.com/store/products/the-legend-of-zelda-breath-of-the-wild-switch/'
     },
     {
       id: 'n2',
       title: 'Super Mario Odyssey',
-      thumbnail: 'https://example.com/mario.jpg',
+      thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80',
       description: 'A globetrotting 3D Mario adventure.',
       genre: 'Platformer',
-      developer: 'Nintendo EPD'
+      developer: 'Nintendo EPD',
+      playUrl: 'https://www.nintendo.com/store/products/super-mario-odyssey-switch/'
     }
   ];
 
